@@ -3,7 +3,7 @@ using HomeManagement.Client.Features.Catalog.ProductCategories.Models;
 
 namespace HomeManagement.Client.Features.Catalog.ProductCategories.Store
 {
-    [FeatureState]
+    [FeatureState(Name = "ProductCategoryState")]
     public record class ProductCategoryState
     {
         public bool Initialized { get; init; }

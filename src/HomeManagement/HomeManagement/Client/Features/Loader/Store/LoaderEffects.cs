@@ -1,5 +1,6 @@
 ﻿using Fluxor;
 using HomeManagement.Client.Features.Catalog.ProductCategories.Store;
+using HomeManagement.Client.Features.Catalog.Products.Store;
 
 namespace HomeManagement.Client.Features.Loader.Store
 {
@@ -16,7 +17,7 @@ namespace HomeManagement.Client.Features.Loader.Store
         public Task StartLoading(IDispatcher dispatcher)
         {
             dispatcher.Dispatch(new ProductCategoryLoadAction());
-            //TODO dispatch di altre action
+            dispatcher.Dispatch(new ProductLoadAction());
 
             return Task.CompletedTask;
         }
@@ -27,6 +28,17 @@ namespace HomeManagement.Client.Features.Loader.Store
             if (!_loaderState.Value.Initialized)
             {
                 dispatcher.Dispatch(new LoaderSetProductCategoriesLoadedAction());
+            }
+
+            return Task.CompletedTask;
+        }
+
+        [EffectMethod(typeof(ProductSetProductsAction))]
+        public Task SetProductsLoaded(IDispatcher dispatcher)
+        {
+            if (!_loaderState.Value.Initialized)
+            {
+                dispatcher.Dispatch(new LoaderSetProductsLoadedAction());
             }
 
             return Task.CompletedTask;

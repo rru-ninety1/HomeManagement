@@ -6,5 +6,8 @@ namespace HomeManagement.Client.Features.Loader.Store
     {
         [ReducerMethod(typeof(LoaderSetProductCategoriesLoadedAction))]
         public static LoaderState OnSetProductCategoriesLoaded(LoaderState state) => state with { ProductCategoriesLoaded = true };
+
+        [ReducerMethod(typeof(LoaderSetProductsLoadedAction))]
+        public static LoaderState OnSetProductsLoaded(LoaderState state) => state with { ProductsLoaded = true };
     }
 }

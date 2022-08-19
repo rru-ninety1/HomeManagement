@@ -2,4 +2,5 @@
 {
     public class LoaderStartLoadingAction { }
     public class LoaderSetProductCategoriesLoadedAction { }
+    public class LoaderSetProductsLoadedAction { }
 }
