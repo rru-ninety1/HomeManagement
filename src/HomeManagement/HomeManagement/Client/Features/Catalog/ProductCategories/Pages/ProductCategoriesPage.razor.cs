@@ -12,11 +12,16 @@ namespace HomeManagement.Client.Features.Catalog.ProductCategories.Pages
         private IState<ProductCategoryState> ProductCategoryState { get; set; }
 
         [Inject]
+        private IState<EditProductCategoryState> EditProductCategoryState { get; set; }
+
+        [Inject]
         public IDispatcher Dispatcher { get; set; }
 
         private bool Loading => ProductCategoryState.Value.Loading;
 
         private bool Initialized => ProductCategoryState.Value.Initialized;
+
+        private bool OnEdit => EditProductCategoryState.Value.Visibile;
 
         private IEnumerable<ProductCategory> Categories => ProductCategoryState.Value.Categories;
 

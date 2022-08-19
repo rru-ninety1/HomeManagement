@@ -22,5 +22,10 @@ namespace HomeManagement.Client.Features.Catalog.ProductCategories.EditProductCa
             bool isNew = Model.Id == null;
             Dispatcher.Dispatch(new EditProductCategorySaveProductCategoryAction(Model, isNew));
         }
+
+        private void Close()
+        {
+            Dispatcher.Dispatch(new EditProductCategoryEndEditProductCategoryAction());
+        }
     }
 }
