@@ -1,0 +1,21 @@
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+@if (Visible)
+{
+    <EditForm Model="Model" OnSubmit="Save">
+        <div class="form-group">
+            <label for="description">Descrizione</label>
+            <InputText class="form-control" id="description" @bind-Value="Model.Description" />
+        </div>
+        <div class="row mt-2">
+            <div class="col">
+                <button class="btn btn-primary" type="submit">Salva</button>
+            </div>
+        </div>
+    </EditForm>
+
+    @if(Saving)
+    {
+        <span>Salvataggio...</span>
+    }
+}

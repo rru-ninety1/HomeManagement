@@ -1,0 +1,47 @@
+﻿@page "/ProductCategories"
+@using HomeManagement.Client.Features.Catalog.ProductCategories.EditProductCategory.Components
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<PageTitle>Categorie</PageTitle>
+
+<div class="row">
+    <div class="col">
+        <button class="btn btn-primary" @onclick="NewCategory">Aggiungi</button>
+    </div>
+</div>
+
+@if (Loading || !Initialized)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Id</th>
+                        <th>Descrizione</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var category in Categories)
+                    {
+                        <tr>
+                            <td><button class="btn btn-primary" @onclick="()=>EditCategory(category)">Modifica</button></td>
+                            <td>@category.Id</td>
+                            <td>@category.Description</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <EditProductCategoryComponent />
+        </div>
+    </div>
+}
