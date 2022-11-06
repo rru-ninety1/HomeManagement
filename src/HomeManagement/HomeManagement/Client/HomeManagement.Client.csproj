@@ -29,7 +29,6 @@
 	<ItemGroup>
 		<Folder Include="Features\Components\" />
 		<Folder Include="Features\Pages\" />
-		<Folder Include="Features\Services\" />
 	</ItemGroup>
 
 </Project>

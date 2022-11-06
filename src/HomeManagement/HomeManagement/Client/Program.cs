@@ -3,7 +3,7 @@ using DnetIndexedDb.Fluent;
 using DnetIndexedDb.Models;
 using Fluxor;
 using HomeManagement.Client;
-using HomeManagement.Client.Features.IndexedDB;
+using HomeManagement.Client.Features.Services.IndexedDB;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -29,26 +29,23 @@ void ConfigureServices(IServiceCollection services)
 #endif
     });
 
-    services.AddIndexedDbDatabase<GridColumnDataIndexedDb>(options =>
+    services.AddIndexedDbDatabase<HomeManagementIndexedDb>(options =>
     {
         var model = new IndexedDbDatabaseModel()
-            .WithName("TestDB")
+            .WithName("HomeManagementDB")
             .WithVersion(1)
             .WithModelId(0);
 
-        model.AddStore("tableFieldDtos")
-            //.WithAutoIncrementingKey("tableFieldId")
-            .WithKey("tableFieldId")
-            .AddUniqueIndex("tableFieldId")
-            .AddIndex("attachedProperty")
-            .AddIndex("fieldVisualName")
-            .AddIndex("hide")
-            .AddIndex("isLink")
-            .AddIndex("memberOf")
-            .AddIndex("tableName")
-            .AddIndex("textAlignClass")
-            .AddIndex("type")
-            .AddIndex("width");
+        model.AddStore("ProductCategory")
+            .WithKey("Id")
+            .AddUniqueIndex("Id")
+            .AddIndex("Description");
+
+        model.AddStore("Product")
+            .WithKey("Id")
+            .AddUniqueIndex("Id")
+            .AddIndex("Description")
+            .AddIndex("CategoryId");
 
         options.UseDatabase(model);
     });
