@@ -1,0 +1,48 @@
+@page "/Products"
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<PageTitle>Prodotti</PageTitle>
+
+@if (OnEdit)
+{
+    <EditProductComponent />
+}
+else
+{
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary" @onclick="NewProduct">Aggiungi</button>
+        </div>
+    </div>
+
+    @if (Loading || !Initialized)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Id</th>
+                            <th>Descrizione</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var product in Products)
+                        {
+                            <tr>
+                                <td><button class="btn btn-primary" @onclick="()=>EditProduct(product)">Modifica</button></td>
+                                <td>@product.Id</td>
+                                <td>@product.Description</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+}
