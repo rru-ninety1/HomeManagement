@@ -6,6 +6,7 @@ using HomeManagement.Client;
 using HomeManagement.Client.Features.Services.IndexedDB;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using MudBlazor.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -49,4 +50,6 @@ void ConfigureServices(IServiceCollection services)
 
         options.UseDatabase(model);
     });
+
+    services.AddMudServices();
 }

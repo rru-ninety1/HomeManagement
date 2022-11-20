@@ -1,6 +1,6 @@
 using Fluxor;
-using HomeManagement.Client.Features.Catalog.ProductCategories.Models;
-using HomeManagement.Client.Features.Catalog.ProductCategories.Store;
+using HomeManagement.Client.Features.Catalog.Products.Models;
+using HomeManagement.Client.Features.Catalog.Products.Store;
 using HomeManagement.Client.Features.Services.IndexedDB;
 
 namespace HomeManagement.Client.Features.Catalog.Products.EditProduct.Store;
@@ -50,7 +50,7 @@ public class EditProductEndEditProductAction { }
 public static class EditProductReducers
 {
     [ReducerMethod(typeof(EditProductAddNewProductAction))]
-    public static EditProductState OnAddNewProduct(EditProductState state) => state with { Visibile = true, Saving = false, Model = new ProductCategory() };
+    public static EditProductState OnAddNewProduct(EditProductState state) => state with { Visibile = true, Saving = false, Model = new Product() };
 
     [ReducerMethod]
     public static EditProductState OnEditProduct(EditProductState state, EditProductModifyProductAction action) => state with { Visibile = true, Saving = false, Model = action.Item };

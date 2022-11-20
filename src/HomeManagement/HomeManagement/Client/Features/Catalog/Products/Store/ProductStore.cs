@@ -1,3 +1,7 @@
+using Fluxor;
+using HomeManagement.Client.Features.Catalog.Products.Models;
+using HomeManagement.Client.Features.Services.IndexedDB;
+
 namespace HomeManagement.Client.Features.Catalog.Products.Store;
 
 [FeatureState(Name = "ProductState")]

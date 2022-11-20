@@ -29,7 +29,7 @@ public partial class ProductsPage
     {
         base.OnInitialized();
 
-        if (!ProductCategoryState.Value.Initialized)
+        if (!ProductState.Value.Initialized)
         {
             Dispatcher.Dispatch(new ProductLoadAction());
         }
