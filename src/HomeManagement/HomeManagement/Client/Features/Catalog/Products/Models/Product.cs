@@ -1,6 +1,6 @@
 ﻿namespace HomeManagement.Client.Features.Catalog.Products.Models
 {
-    public class Product
+    public record class Product
     {
         public string Id { get; set; }
         public string Description { get; set; }

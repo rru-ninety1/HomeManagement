@@ -53,7 +53,7 @@ namespace HomeManagement.Client.Features.Catalog.ProductCategories.EditProductCa
         public static EditProductCategoryState OnAddNewProductCategory(EditProductCategoryState state) => state with { Visibile = true, Saving = false, Model = new ProductCategory() };
 
         [ReducerMethod]
-        public static EditProductCategoryState OnEditProductCategory(EditProductCategoryState state, EditProductCategoryModifyProductCategoryAction action) => state with { Visibile = true, Saving = false, Model = action.Item };
+        public static EditProductCategoryState OnEditProductCategory(EditProductCategoryState state, EditProductCategoryModifyProductCategoryAction action) => state with { Visibile = true, Saving = false, Model = action.Item with { } };
 
         [ReducerMethod(typeof(EditProductCategorySaveProductCategoryAction))]
         public static EditProductCategoryState OnSaveProductCategory(EditProductCategoryState state) => state with { Saving = true };

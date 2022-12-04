@@ -18,7 +18,6 @@ namespace HomeManagement.Client.Features.Catalog.Products.EditProduct.Components
         [Inject]
         public IDispatcher Dispatcher { get; set; }
 
-        private bool Visible => State.Value.Visibile;
         private Product Model => State.Value.Model;
         private bool Saving => State.Value.Saving;
 

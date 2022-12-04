@@ -53,7 +53,7 @@ public static class EditProductReducers
     public static EditProductState OnAddNewProduct(EditProductState state) => state with { Visibile = true, Saving = false, Model = new Product() };
 
     [ReducerMethod]
-    public static EditProductState OnEditProduct(EditProductState state, EditProductModifyProductAction action) => state with { Visibile = true, Saving = false, Model = action.Item };
+    public static EditProductState OnEditProduct(EditProductState state, EditProductModifyProductAction action) => state with { Visibile = true, Saving = false, Model = action.Item with { } };
 
     [ReducerMethod(typeof(EditProductSaveProductAction))]
     public static EditProductState OnSaveProduct(EditProductState state) => state with { Saving = true };

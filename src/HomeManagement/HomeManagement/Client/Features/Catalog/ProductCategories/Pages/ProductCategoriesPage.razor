@@ -12,7 +12,7 @@ else
 {
     <div class="row">
         <div class="col">
-            <button class="btn btn-primary" @onclick="NewCategory">Aggiungi</button>
+            <MudIcon Icon="@Icons.Material.Filled.Add" Title="New" @onclick="NewCategory" />
         </div>
     </div>
 
@@ -28,7 +28,6 @@ else
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Id</th>
                             <th>Descrizione</th>
                         </tr>
                     </thead>
@@ -36,8 +35,7 @@ else
                         @foreach (var category in Categories)
                         {
                             <tr>
-                                <td><button class="btn btn-primary" @onclick="()=>EditCategory(category)">Modifica</button></td>
-                                <td>@category.Id</td>
+                                <td><MudIcon Icon="@Icons.Material.Filled.Edit" Title="Edit" @onclick="()=>EditCategory(category)" /></td>
                                 <td>@category.Description</td>
                             </tr>
                         }

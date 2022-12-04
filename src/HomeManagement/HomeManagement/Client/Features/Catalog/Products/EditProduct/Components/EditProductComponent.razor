@@ -3,8 +3,7 @@
 
 <EditForm Model="Model" OnSubmit="Save">
     <div class="form-group">
-        <label for="description">Descrizione</label>
-        <InputText class="form-control" id="description" @bind-Value="Model.Description" />
+        <MudTextField Label="Descrizione" @bind-Value="Model.Description" Clearable="true" />
     </div>
     <div class="form-group">
         <MudAutocomplete T="ProductCategory" Label="Categoria" @bind-Value="SelectedCategory"  SearchFunc="@SearchCategory"

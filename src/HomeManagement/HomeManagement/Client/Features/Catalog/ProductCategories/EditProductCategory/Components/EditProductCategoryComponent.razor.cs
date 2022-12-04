@@ -13,7 +13,6 @@ namespace HomeManagement.Client.Features.Catalog.ProductCategories.EditProductCa
         [Inject]
         public IDispatcher Dispatcher { get; set; }
 
-        private bool Visible => State.Value.Visibile;
         private ProductCategory Model => State.Value.Model;
         private bool Saving => State.Value.Saving;
 
