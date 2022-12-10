@@ -3,6 +3,7 @@ using HomeManagement.Client.Features.Catalog.ProductCategories.EditProductCatego
 using HomeManagement.Client.Features.Catalog.ProductCategories.Models;
 using HomeManagement.Client.Features.Catalog.ProductCategories.Store;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 
 namespace HomeManagement.Client.Features.Catalog.ProductCategories.Pages
 {
@@ -43,6 +44,11 @@ namespace HomeManagement.Client.Features.Catalog.ProductCategories.Pages
         public void EditCategory(ProductCategory productCategory)
         {
             Dispatcher.Dispatch(new EditProductCategoryModifyProductCategoryAction(productCategory));
+        }
+
+        public void RowClickEvent(TableRowClickEventArgs<ProductCategory> rowClickEvent)
+        {
+            Dispatcher.Dispatch(new EditProductCategoryModifyProductCategoryAction(rowClickEvent.Item));
         }
     }
 }
