@@ -48,7 +48,7 @@ namespace HomeManagement.Client.Features.Catalog.ProductCategories.Pages
 
         public void RowClickEvent(TableRowClickEventArgs<ProductCategory> rowClickEvent)
         {
-            Dispatcher.Dispatch(new EditProductCategoryModifyProductCategoryAction(rowClickEvent.Item));
+            EditCategory(rowClickEvent.Item);
         }
     }
 }

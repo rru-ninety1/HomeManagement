@@ -3,6 +3,7 @@ using HomeManagement.Client.Features.Catalog.Products.EditProduct.Store;
 using HomeManagement.Client.Features.Catalog.Products.Models;
 using HomeManagement.Client.Features.Catalog.Products.Store;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 
 namespace HomeManagement.Client.Features.Catalog.Products.Pages;
 
@@ -43,5 +44,9 @@ public partial class ProductsPage
     public void EditProduct(Product product)
     {
         Dispatcher.Dispatch(new EditProductModifyProductAction(product));
+    }
+    public void RowClickEvent(TableRowClickEventArgs<Product> rowClickEvent)
+    {
+        EditProduct(rowClickEvent.Item);
     }
 }

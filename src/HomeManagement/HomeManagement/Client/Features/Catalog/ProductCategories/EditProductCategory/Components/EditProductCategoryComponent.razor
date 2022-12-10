@@ -1,16 +1,24 @@
 ﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
-<EditForm Model="Model" OnSubmit="Save">
-    <div class="form-group">
-        <MudTextField Label="Descrizione" @bind-Value="Model.Description" Clearable="true" />
+<div class="row">
+    <div class="col">
+        <MudIcon Icon="@Icons.Material.Filled.ArrowBack" Title="Annulla" @onclick="Close" Size="Size.Large" />
     </div>
-    <div class="row mt-2">
-        <div class="col">
-            <button class="btn btn-primary" type="submit">Salva</button>
-            <button class="btn btn-secondary" type="button" @onclick="Close">Annulla</button>
-        </div>
+</div>
+<div class="row mt-2">
+    <div class="col">
+        <EditForm Model="Model">
+            <div class="form-group">
+                <MudTextField Label="Descrizione" @bind-Value="Model.Description" Clearable="true" />
+            </div>
+            <div class="row mt-2">
+                 <div class="col d-flex flex-row-reverse">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Save" Size="Size.Large" OnClick="Save">Salva</MudButton>
+                </div>
+            </div>
+        </EditForm>
     </div>
-</EditForm>
+</div>
 
 @if (Saving)
 {
