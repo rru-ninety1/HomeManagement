@@ -1,6 +1,7 @@
 ﻿using Fluxor;
 using HomeManagement.Client.Features.Catalog.ProductCategories.Models;
 using HomeManagement.Client.Features.Services.IndexedDB;
+using MapsterMapper;
 
 namespace HomeManagement.Client.Features.Catalog.ProductCategories.Store
 {
@@ -48,18 +49,20 @@ namespace HomeManagement.Client.Features.Catalog.ProductCategories.Store
     public class ProductCategoryEffects
     {
         private readonly HomeManagementIndexedDb _homeManagementIndexedDb;
+        private readonly IMapper _mapper;
 
-        public ProductCategoryEffects(HomeManagementIndexedDb homeManagementIndexedDb)
+        public ProductCategoryEffects(HomeManagementIndexedDb homeManagementIndexedDb, IMapper mapper)
         {
             _homeManagementIndexedDb = homeManagementIndexedDb;
+            _mapper = mapper;
         }
 
         [EffectMethod(typeof(ProductCategoryLoadAction))]
         public async Task LoadProductCategories(IDispatcher dispacher)
         {
-            var categories = await _homeManagementIndexedDb.GetAllItems<ProductCategory>().ConfigureAwait(false);
-
-            dispacher.Dispatch(new ProductCategorySetCategoriesAction(categories.ToArray()));
+            var categoriesIDB = await _homeManagementIndexedDb.GetAllItems<ProductCategoryIDB>().ConfigureAwait(false);
+            var categories = _mapper.Map<ProductCategory[]>(categoriesIDB);
+            dispacher.Dispatch(new ProductCategorySetCategoriesAction(categories));
         }
     }
 

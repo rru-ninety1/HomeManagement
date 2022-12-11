@@ -4,6 +4,8 @@ using DnetIndexedDb.Models;
 using Fluxor;
 using HomeManagement.Client;
 using HomeManagement.Client.Features.Services.IndexedDB;
+using Mapster;
+using MapsterMapper;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
@@ -37,10 +39,18 @@ void ConfigureServices(IServiceCollection services)
             .WithVersion(1)
             .WithModelId(0);
 
-        model.AddStore("ProductCategory")
-            .WithKey("Id")
-            .AddUniqueIndex("Id")
-            .AddIndex("Description");
+        //model.AddStore("ProductCategory")
+        //    .WithKey("Id")
+        //    .AddUniqueIndex("Id")
+        //    .AddIndex("Description");
+
+        model.AddStore("ProductCategoryIDB")
+         .WithKey("Id")
+         .AddUniqueIndex("Id")
+         .AddIndex("Description")
+         .AddIndex("RemoteId")
+         .AddIndex("Modified");
+
 
         model.AddStore("Product")
             .WithKey("Id")
@@ -52,4 +62,7 @@ void ConfigureServices(IServiceCollection services)
     });
 
     services.AddMudServices();
+
+    services.AddSingleton(TypeAdapterConfig.GlobalSettings);
+    services.AddScoped<IMapper, ServiceMapper>();
 }

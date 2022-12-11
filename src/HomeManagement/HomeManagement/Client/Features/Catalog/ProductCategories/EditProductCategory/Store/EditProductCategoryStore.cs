@@ -2,6 +2,7 @@
 using HomeManagement.Client.Features.Catalog.ProductCategories.Models;
 using HomeManagement.Client.Features.Catalog.ProductCategories.Store;
 using HomeManagement.Client.Features.Services.IndexedDB;
+using MapsterMapper;
 
 namespace HomeManagement.Client.Features.Catalog.ProductCategories.EditProductCategory.Store
 {
@@ -72,10 +73,12 @@ namespace HomeManagement.Client.Features.Catalog.ProductCategories.EditProductCa
     public class EditProductCategoryEffects
     {
         private readonly HomeManagementIndexedDb _homeManagementIndexedDb;
+        private readonly IMapper _mapper;
 
-        public EditProductCategoryEffects(HomeManagementIndexedDb homeManagementIndexedDb)
+        public EditProductCategoryEffects(HomeManagementIndexedDb homeManagementIndexedDb, IMapper mapper)
         {
             _homeManagementIndexedDb = homeManagementIndexedDb;
+            _mapper = mapper;
         }
 
         [EffectMethod]
@@ -85,21 +88,23 @@ namespace HomeManagement.Client.Features.Catalog.ProductCategories.EditProductCa
             {
                 if (action.IsNew)
                 {
-                    var items = new List<ProductCategory>();
-                    items.Add(new ProductCategory
+                    var items = new List<ProductCategoryIDB>();
+                    items.Add(new ProductCategoryIDB
                     {
                         Id = Guid.NewGuid().ToString(),
-                        Description = action.Item.Description
+                        Description = action.Item.Description,
+                        Modified = true
                     });
 
-                    await _homeManagementIndexedDb.AddNewItems<ProductCategory>(items).ConfigureAwait(false);
+                    await _homeManagementIndexedDb.AddNewItems<ProductCategoryIDB>(items).ConfigureAwait(false);
                 }
                 else
                 {
-                    var items = new List<ProductCategory>();
-                    items.Add(action.Item);
+                    var items = new List<ProductCategoryIDB>();
+                    //TODO get item from db, update and save
+                    items.Add(_mapper.Map<ProductCategoryIDB>(action.Item));
 
-                    await _homeManagementIndexedDb.EditItems<ProductCategory>(items).ConfigureAwait(false);
+                    await _homeManagementIndexedDb.EditItems<ProductCategoryIDB>(items).ConfigureAwait(false);
                 }
 
                 dispacher.Dispatch(new ProductCategoryLoadAction());
