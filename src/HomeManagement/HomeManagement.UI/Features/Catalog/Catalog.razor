@@ -1,0 +1,132 @@
+﻿@page "/catalog"
+@using HomeManagement.Business.Catalog.ProductCategories;
+@using HomeManagement.Business.Catalog.Products;
+@using HomeManagement.Business.Common.Interfaces;
+@using HomeManagement.Core.Catalog;
+@using HomeManagement.UI.Features.Catalog.ProductCategories
+@using HomeManagement.UI.Features.Catalog.Products
+@inject NavigationManager NavigationManager
+@inject IDispacher Dispacher
+@inject IDialogService DialogService
+
+<header class="fixed bg-teal-400/[.95] pt-2 px-5 top-0 w-full h-auto z-20 text-slate-900">
+    <div>Archivi</div>
+    <div class="mt-2 flex justify-evenly w-full">
+        <button class="@CategoryStyle basis-1/2 p-2 focus:outline-none" @onclick="ShowCategories">Categorie</button>
+        <button class="@ProductStyle border-b-0 basis-1/2 p-2 focus:outline-none" @onclick="ShowProducts">Articoli</button>
+    </div>
+</header>
+
+<main>
+    @if (IsCategoriesVisible)
+    {
+        <section class="w-full p-3 fixed top-20 z-10 items-center mx-auto bg-gray-100/[.95]">
+            <MyInputText Placeholder="ricerca..." @bind-Value=searchCategory />
+        </section>
+
+        <ProductCategoryList Items="FilteredCategoryItems"
+                         OnClick="OnCategoryClick"
+                         CssClass="pt-32 pb-16 px-3 flex flex-col space-y-2 z-0 items-center mx-auto" />
+
+    }
+    else if (IsProductsVisible)
+    {
+        <section class="w-full p-3 fixed top-20 z-10 items-center mx-auto bg-gray-100/[.95]">
+            <MyInputText Placeholder="ricerca..." @bind-Value=searchProduct />
+        </section>
+
+        <ProductList Items="FilteredProductItems"
+                 OnClick="OnProductClick"
+                 CssClass="pt-32 pb-16 px-3 flex flex-col space-y-2 z-0 items-center mx-auto" />
+    }
+</main>
+
+
+@code
+{
+    private const string SELECTED_TAB_STYLE = "border-b-violet-700 text-violet-700 border-b-4";
+    private const string UNSELECTED_TAB_STYLE = "";
+
+    private string CategoryStyle = SELECTED_TAB_STYLE;
+    private string ProductStyle = UNSELECTED_TAB_STYLE;
+
+    private bool IsCategoriesVisible = true;
+    private bool IsProductsVisible => !IsCategoriesVisible;
+
+    private string MainClass = "";
+
+    private void ShowCategories()
+    {
+        CategoryStyle = SELECTED_TAB_STYLE;
+        ProductStyle = UNSELECTED_TAB_STYLE;
+        IsCategoriesVisible = true;
+    }
+
+    private void ShowProducts()
+    {
+        ProductStyle = SELECTED_TAB_STYLE;
+        CategoryStyle = UNSELECTED_TAB_STYLE;
+        IsCategoriesVisible = false;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var readProductCategoryResult = await Dispacher.SendQuery(new ProductCategoryListQuery());
+        if (readProductCategoryResult.Success)
+        {
+            CategoryItems = readProductCategoryResult.Content;
+        }
+        else
+        {
+            await DialogService.DisplayAlert("Errore lettura categorie", readProductCategoryResult.ErrorMessage, "Ok")
+               .ConfigureAwait(false);
+            CategoryItems = Enumerable.Empty<ProductCategory>();
+        }
+
+        var readProductResult = await Dispacher.SendQuery(new ProductListQuery());
+        if (readProductResult.Success)
+        {
+            ProductItems = readProductResult.Content;
+        }
+        else
+        {
+            await DialogService.DisplayAlert("Errore lettura prodotti", readProductCategoryResult.ErrorMessage, "Ok")
+               .ConfigureAwait(false);
+            ProductItems = Enumerable.Empty<Product>();
+        }
+    }
+
+    private string searchCategory;
+
+    private IEnumerable<ProductCategory> CategoryItems;
+    private IEnumerable<ProductCategory> FilteredCategoryItems => string.IsNullOrWhiteSpace(searchCategory) ? CategoryItems : CategoryItems.Where(c => c.Description.Contains(searchCategory, StringComparison.InvariantCultureIgnoreCase));
+
+    private void OnCategoryClick(ProductCategory selectedCategory)
+    {
+        if (selectedCategory != null)
+        {
+            NavigationManager.NavigateTo("productCategory/" + selectedCategory.Id);
+        }
+        else
+        {
+            NavigationManager.NavigateTo("productCategory");
+        }
+    }
+
+    private string searchProduct;
+
+    private IEnumerable<Product> ProductItems;
+    private IEnumerable<Product> FilteredProductItems => string.IsNullOrWhiteSpace(searchProduct) ? ProductItems : ProductItems.Where(c => c.Description.Contains(searchProduct, StringComparison.InvariantCultureIgnoreCase));
+
+    private void OnProductClick(Product selectedProduct)
+    {
+        if (selectedProduct != null)
+        {
+            NavigationManager.NavigateTo("product/" + selectedProduct.Id);
+        }
+        else
+        {
+            NavigationManager.NavigateTo("product");
+        }
+    }
+}

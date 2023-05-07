@@ -1,0 +1,25 @@
+﻿@using HomeManagement.Core.Catalog;
+d<div class="@CssClass">
+    <section class="flex justify-center w-full rounded-2xl p-4 shadow-lg shadow-gray-900/5 max-w-sm bg-violet-700 text-slate-200" @onclick="()=>OnClick.InvokeAsync(null)">
+        <h3 class="flex item-center text-sm font-bold">+</h3>
+    </section>
+
+    @foreach (Product item in Items)
+    {
+        <section class="flex justify-between w-full rounded-2xl p-4 shadow-lg shadow-gray-900/5 bg-white max-w-sm" @onclick="()=>OnClick.InvokeAsync(item)">
+            <h3 class="flex item-center text-sm font-semibold text-gray-900">@item.Description</h3>
+        </section>
+    }
+</div>
+
+@code
+{
+    [Parameter]
+    public IEnumerable<Product> Items { get; set; }
+
+    [Parameter]
+    public EventCallback<Product> OnClick { get; set; }
+
+    [Parameter]
+    public string CssClass { get; set; }
+}

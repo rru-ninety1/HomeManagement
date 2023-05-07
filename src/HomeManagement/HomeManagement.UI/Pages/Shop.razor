@@ -1,37 +1,44 @@
 ﻿@page "/shop"
 
-<header class="fixed bg-teal-400/[.95] pt-2 px-5 top-0 w-full max-w-sm h-auto z-10 text-slate-900">
+<header class="fixed bg-teal-400/[.95] pt-2 px-5 top-0 w-full h-auto z-10 text-slate-900">
     <div>Shop</div>
     <div class="mt-2 flex justify-evenly w-full">
-        <button class="border-b-violet-700 text-violet-700 basis-1/2 border-b-4 p-2">Lista della spesa</button>
-        <button class="border-b-violet-600 basis-1/2 border-b-0 p-2">Carrello</button>
+        <button class="@ShoppingListStyle basis-1/2 p-2 focus:outline-none" @onclick="ShowShoppingList">Lista della spesa</button>
+        <button class="@ChartStyle border-b-0 basis-1/2 p-2 focus:outline-none" @onclick="ShowChart">Carrello</button>
     </div>
 </header>
 
 <main class="pt-24 pb-16 px-3 flex flex-col space-y-2 z-0 items-center mx-auto">
 
-    <section class="flex justify-between w-full rounded-2xl p-4 shadow-lg shadow-gray-900/5 bg-white max-w-sm">
-        <h3 class="flex item-center text-sm font-semibold text-lime-400">Articolo 1</h3>
-        <span class="text-rose-500">2 Pz</span>
-    </section>
+    @if (_isShoppingListVisible)
+    {
+        <section class="flex justify-between w-full rounded-2xl p-4 shadow-lg shadow-gray-900/5 bg-white max-w-sm">
+            <h3 class="flex item-center text-sm font-semibold text-lime-400">Articolo 1</h3>
+            <span class="text-rose-500">2 Pz</span>
+        </section>
 
-    <section class="flex justify-between w-full rounded-2xl p-4 shadow-lg shadow-gray-900/5 bg-white max-w-sm">
-        <h3 class="flex item-center text-sm font-semibold text-gray-900">Articolo 1</h3>
-        <span>2 Pz</span>
-    </section>
+        <section class="flex justify-between w-full rounded-2xl p-4 shadow-lg shadow-gray-900/5 bg-white max-w-sm">
+            <h3 class="flex item-center text-sm font-semibold text-gray-900">Articolo 1</h3>
+            <span>2 Pz</span>
+        </section>
 
-    <section class="flex justify-between w-full rounded-2xl p-4 shadow-lg shadow-gray-900/5 bg-white max-w-sm">
-        <h3 class="flex item-center text-sm font-semibold text-gray-900">Articolo 1</h3>
-        <span>2 Pz</span>
-    </section>
+        <section class="flex justify-between w-full rounded-2xl p-4 shadow-lg shadow-gray-900/5 bg-white max-w-sm">
+            <h3 class="flex item-center text-sm font-semibold text-gray-900">Articolo 1</h3>
+            <span>2 Pz</span>
+        </section>
 
-    <section class="flex justify-between w-full rounded-2xl p-4 shadow-lg shadow-gray-900/5 bg-white max-w-sm">
-        <h3 class="flex item-center text-sm font-semibold text-gray-900">Articolo 1</h3>
-        <span>2 Pz</span>
-    </section>
+        <section class="flex justify-between w-full rounded-2xl p-4 shadow-lg shadow-gray-900/5 bg-white max-w-sm">
+            <h3 class="flex item-center text-sm font-semibold text-gray-900">Articolo 1</h3>
+            <span>2 Pz</span>
+        </section>
 
-    <section class="flex justify-between w-full rounded-2xl p-4 shadow-lg shadow-gray-900/5 bg-white max-w-sm">
-        <h3 class="flex item-center text-sm font-semibold text-gray-900">Articolo 1</h3>
-        <span>2 Pz</span>
-    </section>
+        <section class="flex justify-between w-full rounded-2xl p-4 shadow-lg shadow-gray-900/5 bg-white max-w-sm">
+            <h3 class="flex item-center text-sm font-semibold text-gray-900">Articolo 1</h3>
+            <span>2 Pz</span>
+        </section>
+    }
+    else
+    {
+        <span>Chart</span>
+    }
 </main>

@@ -1,0 +1,75 @@
+﻿@page "/productCategory"
+@page "/productCategory/{id}"
+@using HomeManagement.Business.Catalog.ProductCategories;
+@using HomeManagement.Business.Common.Interfaces;
+
+@inject NavigationManager NavigationManager
+@inject IDispacher Dispacher
+@inject IDialogService DialogService
+
+<header class="bg-teal-400/[.95] pt-2 px-5 w-full h-12 text-slate-900">
+    <div>Categoria prodotti</div>
+</header>
+
+<main class="flex flex-col pt-2 px-3 justify-center h-4/5">
+    <HomeManagement.UI.Components.MyInputText Placeholder="Descrizione..." @bind-Value=Description />
+
+    <div class="w-full pt-16 px-3 grid grid-cols-2 justify-items-stretch gap-4">
+        <HomeManagement.UI.Components.MyButton Text="Annulla" IsPrimary=false OnClick="Abort" />
+        <HomeManagement.UI.Components.MyButton Text="Salva" OnClick="Save" />
+    </div>
+</main>
+
+@code
+{
+    [Parameter]
+    public string Id { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id != null)
+        {
+            var result = await Dispacher.SendQuery(new ProductCategoryGetSingleQuery(Id));
+
+            if (result.Success)
+            {
+                Description = result.Content.Description;
+            }
+        }
+        else
+        {
+            Description = "";
+        }
+    }
+
+    private string Description { get; set; }
+
+    private async Task Save()
+    {
+        IGenericResult result;
+
+        if (Id != null)
+        {
+            result = await Dispacher.SendCommand(new ProductCategoryEditCommand(Id, Description));
+        }
+        else
+        {
+            result = await Dispacher.SendCommand(new ProductCategoryAddCommand(Description));
+        }
+
+        if (result.Success)
+        {
+            NavigationManager.NavigateTo("catalog");
+        }
+        else
+        {
+            await DialogService.DisplayAlert("Errore", result.ErrorMessage, "Ok")
+                .ConfigureAwait(false);
+        }
+    }
+
+    private void Abort()
+    {
+        NavigationManager.NavigateTo("catalog");
+    }
+}

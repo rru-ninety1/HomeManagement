@@ -1,4 +1,7 @@
-﻿using HomeManagement.UI.Data;
+﻿using HomeManagement.App.Services;
+using HomeManagement.Business;
+using HomeManagement.Business.Common.Interfaces;
+using HomeManagement.Infrastructure;
 using Microsoft.Extensions.Logging;
 
 namespace HomeManagement.App
@@ -22,7 +25,9 @@ namespace HomeManagement.App
             builder.Logging.AddDebug();
 #endif
 
-            builder.Services.AddSingleton<WeatherForecastService>();
+            builder.Services.AddBusinessServices();
+            builder.Services.AddInfrastructureServices(true);
+            builder.Services.AddSingleton<IDialogService, MauiDialogService>();
 
             return builder.Build();
         }
