@@ -11,13 +11,13 @@
 @inject IDialogService DialogService
 
 <header class="bg-teal-400/[.95] pt-2 px-5 w-full h-12 text-slate-900">
-    <div>Categoria prodotti</div>
+    <div>Prodotti</div>
 </header>
 
 <main class="flex flex-col pt-2 px-3 justify-center h-4/5">
     <HomeManagement.UI.Components.MyInputText Placeholder="Descrizione..." @bind-Value=Description />
     
-    <select @bind="CategoryId" class="p-2 w-full rounded-md border block border-slate-300 bg-white shadow-sm focus:border-violet-700 focus:outline-none focus:ring-1 focus:ring-violet-700 sm:text-sm">
+    <select @bind="CategoryId" class="p-2 mt-2 w-full rounded-md border block border-slate-300 bg-white shadow-sm focus:border-violet-700 focus:outline-none focus:ring-1 focus:ring-violet-700 sm:text-sm">
         @foreach (var item in ProductCategories)
         {
             <option value="@item.Id">@item.Description</option>
@@ -88,7 +88,7 @@
 
         if (result.Success)
         {
-            NavigationManager.NavigateTo("catalog");
+            NavigationManager.NavigateTo("catalog/products");
         }
         else
         {
@@ -99,7 +99,7 @@
 
     private void Abort()
     {
-        NavigationManager.NavigateTo("catalog");
+        NavigationManager.NavigateTo("catalog/products");
 
     }
 }

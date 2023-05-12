@@ -12,7 +12,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Client\HomeManagement.Client.csproj" />
-    <ProjectReference Include="..\Shared\HomeManagement.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 

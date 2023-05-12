@@ -1,4 +1,6 @@
 ﻿@page "/catalog"
+@page "/catalog/{page}"
+
 @using HomeManagement.Business.Catalog.ProductCategories;
 @using HomeManagement.Business.Catalog.Products;
 @using HomeManagement.Business.Common.Interfaces;
@@ -69,6 +71,9 @@
         IsCategoriesVisible = false;
     }
 
+    [Parameter]
+    public string Page { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         var readProductCategoryResult = await Dispacher.SendQuery(new ProductCategoryListQuery());
@@ -93,6 +98,23 @@
             await DialogService.DisplayAlert("Errore lettura prodotti", readProductCategoryResult.ErrorMessage, "Ok")
                .ConfigureAwait(false);
             ProductItems = Enumerable.Empty<Product>();
+        }
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        if (Page != null)
+        {
+            if (Page == "products")
+            {
+                ShowProducts();
+            }
+            else
+            {
+                ShowCategories();
+            }
         }
     }
 
