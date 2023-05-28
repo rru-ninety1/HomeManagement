@@ -14,6 +14,11 @@ namespace HomeManagement.Infrastructure.DAL
             base.OnModelCreating(modelBuilder);
         }
 
+        public void Migrate()
+        {
+            Database.Migrate();
+        }
+
         public IQueryable<T> GetData<T>(bool trackingChanges = false, bool ignoreQueryFilters = false) where T : class
         {
             var set = Set<T>().AsQueryable();

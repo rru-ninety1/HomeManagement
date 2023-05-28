@@ -2,6 +2,7 @@
 using HomeManagement.Business;
 using HomeManagement.Business.Common.Interfaces;
 using HomeManagement.Infrastructure;
+using HomeManagement.Infrastructure.DAL;
 using Microsoft.Extensions.Logging;
 
 namespace HomeManagement.App
@@ -24,12 +25,25 @@ namespace HomeManagement.App
             builder.Services.AddBlazorWebViewDeveloperTools();
             builder.Logging.AddDebug();
 #endif
+            bool inMemoryDb = false;
+
 
             builder.Services.AddBusinessServices();
-            builder.Services.AddInfrastructureServices(true);
+            builder.Services.AddInfrastructureServices(inMemoryDb, FileSystem.AppDataDirectory);
             builder.Services.AddSingleton<IDialogService, MauiDialogService>();
 
-            return builder.Build();
+            var mauiApp = builder.Build();
+
+            if (!inMemoryDb)
+            {
+                using (var scope = mauiApp.Services.CreateScope())
+                {
+                    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                    db.Migrate();
+                }
+            }
+
+            return mauiApp;
         }
     }
 }

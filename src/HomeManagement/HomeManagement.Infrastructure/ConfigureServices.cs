@@ -6,15 +6,23 @@ using Microsoft.Extensions.DependencyInjection;
 namespace HomeManagement.Infrastructure;
 public static class ConfigureServices
 {
-    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, bool inMemory)
+    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, bool inMemory, string appDataDirectory)
     {
-        services.AddDbContext<ApplicationDbContext>(options =>
+        if (inMemory)
         {
-            options.UseInMemoryDatabase("ApplicationDatabase");
-        });
-        //services.AddDbContext<ApplicationDbContext>(options =>
-        //   options.UseSqlServer(configuration.GetConnectionString("sql"),
-        //       builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseInMemoryDatabase("ApplicationDatabase");
+            });
+        }
+        else
+        {
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                string dbFile = Path.Combine(appDataDirectory, "HomeManagement.db3");
+                options.UseSqlite($"Data Source={dbFile}");
+            });
+        }
 
         services.AddScoped<IReadOnlyDataContext>(services => services.GetRequiredService<ApplicationDbContext>());
         services.AddScoped<IDataContext>(services => services.GetRequiredService<ApplicationDbContext>());

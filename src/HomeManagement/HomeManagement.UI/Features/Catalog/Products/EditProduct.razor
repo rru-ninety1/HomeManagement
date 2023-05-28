@@ -17,12 +17,21 @@
 <main class="flex flex-col pt-2 px-3 justify-center h-4/5">
     <HomeManagement.UI.Components.MyInputText Placeholder="Descrizione..." @bind-Value=Description />
     
-    <select @bind="CategoryId" class="p-2 mt-2 w-full rounded-md border block border-slate-300 bg-white shadow-sm focus:border-violet-700 focus:outline-none focus:ring-1 focus:ring-violet-700 sm:text-sm">
+    <select 
+        @bind="CategoryId" 
+        class="p-2 mt-2 w-full rounded-md border block border-slate-300 bg-white shadow-sm focus:border-violet-700 focus:outline-none focus:ring-1 focus:ring-violet-700 sm:text-sm">
+        
         @foreach (var item in ProductCategories)
         {
             <option value="@item.Id">@item.Description</option>
         }
     </select>
+
+    <HomeManagement.UI.Components.MyInputText 
+        @bind-Value=LastPrice
+        Css="mt-2"
+        ReadOnly=true 
+        Placeholder="Ultimo prezzo" />
 
     <div class="w-full pt-16 px-3 grid grid-cols-2 justify-items-stretch gap-4">
         <HomeManagement.UI.Components.MyButton Text="Annulla" IsPrimary=false OnClick="Abort" />
@@ -58,6 +67,7 @@
             {
                 Description = result.Content.Description;
                 CategoryId = result.Content.CategoryId;
+                LastPrice = result.Content.LastPrice?.ToString() ?? "";
             }
         }
         else
@@ -72,6 +82,8 @@
     private string Description { get; set; }
 
     private string CategoryId { get; set; }
+
+    private string LastPrice { get; set; }
 
     private async Task Save()
     {
