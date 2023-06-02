@@ -26,6 +26,7 @@ public static class ConfigureServices
 
         services.AddScoped<IReadOnlyDataContext>(services => services.GetRequiredService<ApplicationDbContext>());
         services.AddScoped<IDataContext>(services => services.GetRequiredService<ApplicationDbContext>());
+        services.AddScoped<Bootstraper>();
 
         return services;
     }

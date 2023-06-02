@@ -2,7 +2,6 @@
 using HomeManagement.Business;
 using HomeManagement.Business.Common.Interfaces;
 using HomeManagement.Infrastructure;
-using HomeManagement.Infrastructure.DAL;
 using Microsoft.Extensions.Logging;
 
 namespace HomeManagement.App
@@ -38,8 +37,8 @@ namespace HomeManagement.App
             {
                 using (var scope = mauiApp.Services.CreateScope())
                 {
-                    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                    db.Migrate();
+                    var infrastructureBootstrapper = scope.ServiceProvider.GetRequiredService<Bootstraper>();
+                    infrastructureBootstrapper.Execute();
                 }
             }
 
