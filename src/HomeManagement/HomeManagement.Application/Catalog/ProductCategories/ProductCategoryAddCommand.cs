@@ -17,9 +17,9 @@ public sealed class ProductCategoryAddCommandHandler : ICommandHandler<ProductCa
         _dataContext = dataContext;
     }
 
-    public async Task<Result> Handle(ProductCategoryAddCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(ProductCategoryAddCommand command, CancellationToken cancellationToken)
     {
-        _dataContext.Insert(new ProductCategory { Description = request.Description });
+        _dataContext.Insert(new ProductCategory { Description = command.Description });
 
         await _dataContext.SaveAsync(cancellationToken)
             .ConfigureAwait(false);

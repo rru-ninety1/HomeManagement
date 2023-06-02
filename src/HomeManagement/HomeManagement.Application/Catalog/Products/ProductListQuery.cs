@@ -17,7 +17,7 @@ public class ProductListQueryHandler : IQueryHandler<ProductListQuery, IEnumerab
         _dataContext = dataContext;
     }
 
-    public async Task<Result<IEnumerable<Product>>> Handle(ProductListQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<Product>>> Handle(ProductListQuery query, CancellationToken cancellationToken)
     {
         var products = await _dataContext.GetData<Product>()
             .ToListAsync()

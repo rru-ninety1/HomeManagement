@@ -1,7 +1,9 @@
-﻿using HomeManagement.Business.Common.CommandQuery;
+﻿using FluentValidation;
+using HomeManagement.Business.Common.CommandQuery;
 using HomeManagement.Business.Common.Interfaces;
 using HomeManagement.Core.Catalog;
 using OperationResults;
+using Riok.Mapperly.Abstractions;
 
 namespace HomeManagement.Business.Catalog.Products;
 
@@ -16,13 +18,34 @@ public class ProductAddCommandHandler : ICommandHandler<ProductAddCommand>
         _dataContext = dataContext;
     }
 
-    public async Task<Result> Handle(ProductAddCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(ProductAddCommand command, CancellationToken cancellationToken)
     {
-        _dataContext.Insert(new Product { Description = request.Description, CategoryId = request.CategoryId });
+        if (!_dataContext.GetData<ProductCategory>().Any(x => x.Id.Equals(command.CategoryId)))
+        {
+            return Result.Fail(FailureReasons.ItemNotFound, "Categoria non presente");
+        }
+
+        var product = new ProductAddCommandMapper().ToProduct(command);
+        _dataContext.Insert(product);
 
         await _dataContext.SaveAsync(cancellationToken)
             .ConfigureAwait(false);
 
         return Result.Ok();
     }
+}
+
+public sealed class ProductAddCommandValidator : AbstractValidator<ProductAddCommand>
+{
+    public ProductAddCommandValidator()
+    {
+        RuleFor(x => x.Description).NotEmpty().WithMessage("Descrizione obbligatoria");
+        RuleFor(x => x.CategoryId).NotEmpty().WithMessage("Categoria obbligatoria");
+    }
+}
+
+[Mapper]
+public partial class ProductAddCommandMapper
+{
+    public partial Product ToProduct(ProductAddCommand comand);
 }

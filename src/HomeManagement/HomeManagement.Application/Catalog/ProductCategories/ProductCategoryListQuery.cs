@@ -17,7 +17,7 @@ public class ProductCategoryListQueryHandler : IQueryHandler<ProductCategoryList
         _dataContext = dataContext;
     }
 
-    public async Task<Result<IEnumerable<ProductCategory>>> Handle(ProductCategoryListQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<ProductCategory>>> Handle(ProductCategoryListQuery query, CancellationToken cancellationToken)
     {
         var categories = await _dataContext.GetData<ProductCategory>()
             .ToListAsync()

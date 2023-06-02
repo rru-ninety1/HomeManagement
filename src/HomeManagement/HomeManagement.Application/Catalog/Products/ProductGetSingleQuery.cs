@@ -1,4 +1,5 @@
-﻿using HomeManagement.Business.Common.CommandQuery;
+﻿using FluentValidation;
+using HomeManagement.Business.Common.CommandQuery;
 using HomeManagement.Business.Common.Interfaces;
 using HomeManagement.Core.Catalog;
 using Microsoft.EntityFrameworkCore;
@@ -17,10 +18,10 @@ public class ProductGetSingleQueryHandler : IQueryHandler<ProductGetSingleQuery,
         _dataContext = dataContext;
     }
 
-    public async Task<Result<Product>> Handle(ProductGetSingleQuery request, CancellationToken cancellationToken)
+    public async Task<Result<Product>> Handle(ProductGetSingleQuery query, CancellationToken cancellationToken)
     {
         var product = await _dataContext.GetData<Product>()
-            .FirstOrDefaultAsync(x => x.Id == request.Id)
+            .FirstOrDefaultAsync(x => x.Id == query.Id)
             .ConfigureAwait(false);
 
         if (product == null)
@@ -29,5 +30,13 @@ public class ProductGetSingleQueryHandler : IQueryHandler<ProductGetSingleQuery,
         }
 
         return product;
+    }
+}
+
+public sealed class ProductGetSingleQueryValidator : AbstractValidator<ProductGetSingleQuery>
+{
+    public ProductGetSingleQueryValidator()
+    {
+        RuleFor(x => x.Id).NotEmpty().WithMessage("Prodotto obbligatorio");
     }
 }

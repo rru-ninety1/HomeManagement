@@ -1,4 +1,5 @@
-﻿using HomeManagement.Business.Common.CommandQuery;
+﻿using FluentValidation;
+using HomeManagement.Business.Common.CommandQuery;
 using HomeManagement.Business.Common.Interfaces;
 using HomeManagement.Core.Catalog;
 using Microsoft.EntityFrameworkCore;
@@ -17,10 +18,10 @@ public class ProductCategoryGetSingleQueryHandler : IQueryHandler<ProductCategor
         _dataContext = dataContext;
     }
 
-    public async Task<Result<ProductCategory>> Handle(ProductCategoryGetSingleQuery request, CancellationToken cancellationToken)
+    public async Task<Result<ProductCategory>> Handle(ProductCategoryGetSingleQuery query, CancellationToken cancellationToken)
     {
         var productCategory = await _dataContext.GetData<ProductCategory>()
-            .FirstOrDefaultAsync(x => x.Id == request.Id)
+            .FirstOrDefaultAsync(x => x.Id == query.Id)
             .ConfigureAwait(false);
 
         if (productCategory == null)
@@ -29,5 +30,13 @@ public class ProductCategoryGetSingleQueryHandler : IQueryHandler<ProductCategor
         }
 
         return productCategory;
+    }
+}
+
+public sealed class ProductCategoryGetSingleQueryValidator : AbstractValidator<ProductCategoryGetSingleQuery>
+{
+    public ProductCategoryGetSingleQueryValidator()
+    {
+        RuleFor(x => x.Id).NotEmpty().WithMessage("Cateogira obbligatoria");
     }
 }
