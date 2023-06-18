@@ -33,6 +33,8 @@
         FirtstTabStyle = SELECTED_TAB_STYLE;
         SecondTabStyle = UNSELECTED_TAB_STYLE;
         IsFirtstTabVisible = true;
+
+        StateHasChanged();
     }
 
     public void ShowSecondTab()
@@ -40,6 +42,10 @@
         SecondTabStyle = SELECTED_TAB_STYLE;
         FirtstTabStyle = UNSELECTED_TAB_STYLE;
         IsFirtstTabVisible = false;
+
+        StateHasChanged();
+
+        //TODO controllare se, al ritorno dalla paggina di modifica, viene fatto il render 2 volte del componente con caricamento due volte della griglia
     }
 
     [Parameter]

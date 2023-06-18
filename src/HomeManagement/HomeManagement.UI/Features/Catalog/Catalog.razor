@@ -64,9 +64,9 @@
     private TabControl TabControlArchive;
 
 
-    protected override void OnParametersSet()
+    protected override void OnAfterRender(bool firtRender)
     {
-        base.OnParametersSet();
+        base.OnAfterRender(firtRender);
 
         if (Page != null)
         {
