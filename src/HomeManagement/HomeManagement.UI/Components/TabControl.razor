@@ -1,0 +1,59 @@
+﻿<header class="fixed bg-teal-400/[.95] pt-2 px-5 top-0 w-full h-auto z-20 text-slate-900">
+    <div>@Title</div>
+    <div class="mt-2 flex justify-evenly w-full">
+        <button class="@FirtstTabStyle basis-1/2 p-2 focus:outline-none" @onclick="ShowFirtsTab">@FirstTabLabel</button>
+        <button class="@SecondTabStyle border-b-0 basis-1/2 p-2 focus:outline-none" @onclick="ShowSecondTab">@SecondTabLabel</button>
+    </div>
+</header>
+
+<main>
+    @if (IsFirtstTabVisible)
+    {
+        @FirstTab
+    }
+    else if (IsSecondTabVisible)
+    {
+        @SecondTab
+    }
+</main>
+
+@code
+{
+    private const string SELECTED_TAB_STYLE = "border-b-violet-700 text-violet-700 border-b-4";
+    private const string UNSELECTED_TAB_STYLE = "";
+
+    private string FirtstTabStyle = SELECTED_TAB_STYLE;
+    private string SecondTabStyle = UNSELECTED_TAB_STYLE;
+
+    private bool IsFirtstTabVisible = true;
+    private bool IsSecondTabVisible => !IsFirtstTabVisible;
+
+    public void ShowFirtsTab()
+    {
+        FirtstTabStyle = SELECTED_TAB_STYLE;
+        SecondTabStyle = UNSELECTED_TAB_STYLE;
+        IsFirtstTabVisible = true;
+    }
+
+    public void ShowSecondTab()
+    {
+        SecondTabStyle = SELECTED_TAB_STYLE;
+        FirtstTabStyle = UNSELECTED_TAB_STYLE;
+        IsFirtstTabVisible = false;
+    }
+
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public string FirstTabLabel { get; set; }
+
+    [Parameter]
+    public string SecondTabLabel { get; set; }
+
+    [Parameter]
+    public RenderFragment? FirstTab { get; set; }
+
+    [Parameter]
+    public RenderFragment? SecondTab { get; set; }
+}

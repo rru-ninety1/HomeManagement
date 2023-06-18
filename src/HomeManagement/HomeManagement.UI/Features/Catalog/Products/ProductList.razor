@@ -1,12 +1,23 @@
-﻿@using HomeManagement.Core.Catalog;
-d<div class="@CssClass">
-    <section class="flex justify-center w-full rounded-2xl p-4 shadow-lg shadow-gray-900/5 max-w-sm bg-violet-700 text-slate-200" @onclick="()=>OnClick.InvokeAsync(null)">
+﻿@using HomeManagement.Business.Catalog.Products;
+@using HomeManagement.Business.Common.Interfaces;
+@using HomeManagement.Core.Catalog;
+
+@inject NavigationManager NavigationManager
+@inject IDispacher Dispacher
+@inject IDialogService DialogService
+
+<section class="w-full p-3 fixed top-20 z-10 items-center mx-auto bg-gray-100/[.95]">
+    <MyInputText Placeholder="ricerca..." @bind-Value=searchProduct />
+</section>
+
+<div class="pt-36 pb-16 px-3 flex flex-col space-y-2 z-0 items-center mx-auto">
+    <section class="flex justify-center w-full rounded-2xl p-4 shadow-lg shadow-gray-900/5 max-w-sm bg-violet-700 text-slate-200" @onclick="()=>OnProductClick(null)">
         <h3 class="flex item-center text-sm font-bold">+</h3>
     </section>
 
-    @foreach (Product item in Items)
+    @foreach (Product item in FilteredProductItems)
     {
-        <section class="flex justify-between w-full rounded-2xl p-4 shadow-lg shadow-gray-900/5 bg-white max-w-sm" @onclick="()=>OnClick.InvokeAsync(item)">
+        <section class="flex justify-between w-full rounded-2xl p-4 shadow-lg shadow-gray-900/5 bg-white max-w-sm" @onclick="()=>OnProductClick(item)">
             <h3 class="flex item-center text-sm font-semibold text-gray-900">@item.Description</h3>
         </section>
     }
@@ -14,12 +25,35 @@ d<div class="@CssClass">
 
 @code
 {
-    [Parameter]
-    public IEnumerable<Product> Items { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        var readProductResult = await Dispacher.SendQuery(new ProductListQuery());
+        if (readProductResult.Success)
+        {
+            ProductItems = readProductResult.Content;
+        }
+        else
+        {
+            await DialogService.DisplayAlert("Errore lettura prodotti", readProductResult.ErrorMessage, "Ok")
+               .ConfigureAwait(false);
+            ProductItems = Enumerable.Empty<Product>();
+        }
+    }
 
-    [Parameter]
-    public EventCallback<Product> OnClick { get; set; }
+    private string searchProduct;
 
-    [Parameter]
-    public string CssClass { get; set; }
+    private IEnumerable<Product> ProductItems;
+    private IEnumerable<Product> FilteredProductItems => string.IsNullOrWhiteSpace(searchProduct) ? ProductItems : ProductItems.Where(c => c.Description.Contains(searchProduct, StringComparison.InvariantCultureIgnoreCase));
+
+    private void OnProductClick(Product selectedProduct)
+    {
+        if (selectedProduct != null)
+        {
+            NavigationManager.NavigateTo("product/" + selectedProduct.Id);
+        }
+        else
+        {
+            NavigationManager.NavigateTo("product");
+        }
+    }
 }

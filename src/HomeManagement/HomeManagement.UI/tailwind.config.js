@@ -3,6 +3,7 @@ module.exports = {
     content: ["*.{html,js,razor,razor.cs}", "**/*.{html,js,razor,razor.cs}"],
     safelist: [
         "h-screen",
+        "h-full",
         "bg-gray-100",
         "max-w-sm",
         "mx-auto"
