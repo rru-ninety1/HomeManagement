@@ -1,0 +1,137 @@
+﻿<div class="autocomplete">
+    <input type="search"
+    @bind=selectedItemDescritpion
+    @oninput=HandleInput
+    class="w-full rounded-md border border-slate-300 bg-white p-2 shadow-sm placeholder:italic placeholder:text-slate-400 focus:border-violet-700 focus:outline-none focus:ring-1 focus:ring-violet-700 sm:text-sm" />
+    @if (items is not null)
+    {
+        <ul class="options absolute w-full p-0 left-0 border border-violet-700 rounded-md border-slate-300 bg-white shadow-sm">
+            @if (items.Any())
+            {
+                @foreach (var item in items)
+                {
+                    <li class="option block p-1 hover:bg-violet-700 hover:text-white" @onclick=@(_ => SelectItem(item.Id))>
+                        <span class="option-text">@item.Description</span>
+                    </li>
+                }
+            }
+            else
+            {
+                <li class="disabled option p-1">Nessun risultato</li>
+            }
+        </ul>
+    }
+</div>
+
+@if (!string.IsNullOrWhiteSpace(selectedItemDescritpion))
+{
+    <p class="mt-3">
+        Selected item is @selectedItemDescritpion with ID <strong>@selectedItemId</strong>
+    </p>
+}
+
+@code
+{
+    private AutocompleteItem[] _values = new AutocompleteItem[]
+        {
+            new AutocompleteItem
+            {
+                Id="1",
+                Description="primo"
+            },
+            new AutocompleteItem
+            {
+                Id="2",
+                Description="pri secondo"
+            },
+            new AutocompleteItem
+            {
+                Id="3",
+                Description="terzo"
+            }
+        };
+
+    List<AutocompleteItem>? items;
+    string? selectedItemId;
+    string? selectedItemDescritpion;
+    string? filter;
+
+    async Task HandleInput(ChangeEventArgs e)
+    {
+        filter = e.Value?.ToString();
+
+        if (filter?.Length > 2)
+        {
+            items = _values.Where(x => x.Description.StartsWith(filter)).ToList();
+        }
+        else
+        {
+            items = null;
+            selectedItemDescritpion = selectedItemId = null;
+        }
+    }
+
+    void HandleFocusOut()
+    {
+        if ((items != null) && (items.Count > 1))
+        {
+            items = null;
+            //selectedItemDescritpion = selectedItemId = null;
+        }
+    }
+
+    void SelectItem(string id)
+    {
+        selectedItemId = id;
+        selectedItemDescritpion = items!.First(c => c.Id.Equals(selectedItemId)).Description;
+        items = null;
+    }
+
+    internal class AutocompleteItem
+    {
+        public string Id { get; set; }
+        public string Description { get; set; }
+    }
+}
+
+<style>
+    .autocomplete {
+        position: relative;
+    }
+
+        .autocomplete .options {
+            /*position: absolute;*/
+            top: 44px;
+            /*left: 0;*/
+            /*background: white;*/
+            /*width: 100%;*/
+            z-index: 10;
+            /*  border: 1px solid #ced4da;
+                border-radius: 0.5rem;
+                box-shadow: 0 30px 25px 8px rgba(0, 0, 0, 0.1);*/
+        }
+
+        .autocomplete .option {
+            /*display: block;*/
+            /*padding: 0.25rem;*/
+        }
+
+            .autocomplete .option .option-text {
+                padding: 0.25rem 0.5rem;
+            }
+
+            .autocomplete .option:hover {
+                /*background: #1E90FF;*/
+                /*color: #fff;*/
+            }
+
+            .autocomplete .option.disabled {
+                background-color: lightgrey;
+                cursor: not-allowed;
+            }
+
+                .autocomplete .option.disabled:hover {
+                    background: lightgrey;
+                    color: var(--bs-body);
+                }
+</style>
