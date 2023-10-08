@@ -1,4 +1,4 @@
-﻿namespace HomeManagement.UI.Pages
+﻿namespace HomeManagement.UI.Features.Shop
 {
     public partial class Shop
     {
