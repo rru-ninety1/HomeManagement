@@ -1,0 +1,24 @@
+﻿<section class="w-full p-3 fixed top-20 z-10 items-center mx-auto bg-gray-100/[.95]">
+    <MyInputText Placeholder="ricerca..." @bind-Value=Value />
+</section>
+
+@code {
+    private string _value = "";
+
+    [Parameter]
+    public string Value
+    {
+        get => _value;
+        set
+        {
+            if (_value != value)
+            {
+                _value = value;
+                ValueChanged.InvokeAsync(value);
+            }
+        }
+    }
+
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+}

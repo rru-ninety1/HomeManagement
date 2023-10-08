@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeManagement.Business", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeManagement.Core", "HomeManagement.Core\HomeManagement.Core.csproj", "{A9A1A6FA-82ED-4641-BFEE-BC1DF98A9284}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeManagement.Infrastructure", "HomeManagement.Infrastructure\HomeManagement.Infrastructure.csproj", "{6E2A04BD-BB63-4794-9119-7B81562AC260}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeManagement.Infrastructure", "HomeManagement.Infrastructure\HomeManagement.Infrastructure.csproj", "{6E2A04BD-BB63-4794-9119-7B81562AC260}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
