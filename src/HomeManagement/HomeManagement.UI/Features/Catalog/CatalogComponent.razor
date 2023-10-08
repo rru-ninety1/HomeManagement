@@ -1,0 +1,86 @@
+﻿@page "/catalog"
+@page "/catalog/{page}"
+
+@using HomeManagement.UI.Features.Catalog.ProductCategories
+@using HomeManagement.UI.Features.Catalog.Products
+
+@*<header class="fixed bg-teal-400/[.95] pt-2 px-5 top-0 w-full h-auto z-20 text-slate-900">
+    <div>Archivi</div>
+    <div class="mt-2 flex justify-evenly w-full">
+        <button class="@CategoryStyle basis-1/2 p-2 focus:outline-none" @onclick="ShowCategories">Categorie</button>
+        <button class="@ProductStyle border-b-0 basis-1/2 p-2 focus:outline-none" @onclick="ShowProducts">Articoli</button>
+    </div>
+</header>
+
+<main>
+    @if (IsCategoriesVisible)
+    {
+        <ProductCategoryList />
+    }
+    else if (IsProductsVisible)
+    {
+        <ProductList  />
+    }
+</main>*@
+
+<TabControl @ref="TabControlArchive" Title="Archivi" FirstTabLabel="Categorie" SecondTabLabel="Articoli">
+    <FirstTab>
+        <ProductCategoryList />
+    </FirstTab>
+    <SecondTab>
+        <ProductList />
+    </SecondTab>
+</TabControl>
+
+
+@code
+{
+    //private const string SELECTED_TAB_STYLE = "border-b-violet-700 text-violet-700 border-b-4";
+    //private const string UNSELECTED_TAB_STYLE = "";
+
+    //private string CategoryStyle = SELECTED_TAB_STYLE;
+    //private string ProductStyle = UNSELECTED_TAB_STYLE;
+
+    //private bool IsCategoriesVisible = true;
+    //private bool IsProductsVisible => !IsCategoriesVisible;
+
+    //private void ShowCategories()
+    //{
+    //    CategoryStyle = SELECTED_TAB_STYLE;
+    //    ProductStyle = UNSELECTED_TAB_STYLE;
+    //    IsCategoriesVisible = true;
+    //}
+
+    //private void ShowProducts()
+    //{
+    //    ProductStyle = SELECTED_TAB_STYLE;
+    //    CategoryStyle = UNSELECTED_TAB_STYLE;
+    //    IsCategoriesVisible = false;
+    //}
+
+    [Parameter]
+    public string Page { get; set; }
+
+    private TabControl TabControlArchive;
+
+
+    protected override void OnAfterRender(bool firtRender)
+    {
+        base.OnAfterRender(firtRender);
+
+        if (Page != null)
+        {
+            if (Page == "products")
+            {
+                TabControlArchive?.ShowSecondTab();
+                //ShowProducts();
+            }
+            else
+            {
+                TabControlArchive?.ShowFirtsTab();
+
+                //ShowCategories();
+            }
+        }
+    }
+}

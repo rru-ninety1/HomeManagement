@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "tailwindcss": "^3.2.6"
+  },
+  "scripts": {
+    "build": "tailwindcss -i ./Style/input.css -o ./wwwroot/app.css",
+    "build-min": "tailwindcss -i ./Style/input.css -o ./wwwroot/app.css --minify",
+    "watch": "tailwindcss -i ./Style/input.css -o ./wwwroot/app.css --watch"
+  }
+}

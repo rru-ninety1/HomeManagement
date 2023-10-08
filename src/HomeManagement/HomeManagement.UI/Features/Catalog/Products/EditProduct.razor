@@ -1,0 +1,117 @@
+﻿@page "/product"
+@page "/product/{id}"
+@using HomeManagement.Business.Catalog.ProductCategories;
+@using HomeManagement.Business.Catalog.Products;
+@using HomeManagement.Business.Common.Interfaces;
+@using HomeManagement.Core.Catalog;
+
+
+@inject NavigationManager NavigationManager
+@inject IDispacher Dispacher
+@inject IDialogService DialogService
+
+<header class="bg-teal-400/[.95] pt-2 px-5 w-full h-12 text-slate-900">
+    <div>Prodotti</div>
+</header>
+
+<main class="flex flex-col pt-2 px-3 justify-center h-4/5">
+    <HomeManagement.UI.Components.MyInputText Placeholder="Descrizione..." @bind-Value=Description />
+    
+    <select 
+        @bind="CategoryId" 
+        class="p-2 mt-2 w-full rounded-md border block border-slate-300 bg-white shadow-sm focus:border-violet-700 focus:outline-none focus:ring-1 focus:ring-violet-700 sm:text-sm">
+        
+        @foreach (var item in ProductCategories)
+        {
+            <option value="@item.Id">@item.Description</option>
+        }
+    </select>
+
+    <HomeManagement.UI.Components.MyInputText 
+        @bind-Value=LastPrice
+        Css="mt-2"
+        ReadOnly=true 
+        Placeholder="Ultimo prezzo" />
+
+    <div class="w-full pt-16 px-3 grid grid-cols-2 justify-items-stretch gap-4">
+        <HomeManagement.UI.Components.MyButton Text="Annulla" IsPrimary=false OnClick="Abort" />
+        <HomeManagement.UI.Components.MyButton Text="Salva" OnClick="Save" />
+    </div>
+</main>
+
+@code
+{
+    [Parameter]
+    public string Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var prodctCategoryReadResult = await Dispacher.SendQuery(new ProductCategoryListQuery());
+        if (prodctCategoryReadResult.Success)
+        {
+            ProductCategories = prodctCategoryReadResult.Content;
+        }
+        else
+        {
+            ProductCategories = new List<ProductCategory>();
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id != null)
+        {
+            var result = await Dispacher.SendQuery(new ProductGetSingleQuery(Id));
+
+            if (result.Success)
+            {
+                Description = result.Content.Description;
+                CategoryId = result.Content.CategoryId;
+                LastPrice = result.Content.LastPrice?.ToString() ?? "";
+            }
+        }
+        else
+        {
+            Description = "";
+            CategoryId = ProductCategories.Any() ? ProductCategories.First().Id : null;
+        }
+    }
+
+    private IEnumerable<ProductCategory> ProductCategories;
+
+    private string Description { get; set; }
+
+    private string CategoryId { get; set; }
+
+    private string LastPrice { get; set; }
+
+    private async Task Save()
+    {
+        IGenericResult result;
+
+        if (Id != null)
+        {
+            result = await Dispacher.SendCommand(new ProductEditCommand(Id, Description, CategoryId));
+        }
+        else
+        {
+            result = await Dispacher.SendCommand(new ProductAddCommand(Description, CategoryId));
+        }
+
+        if (result.Success)
+        {
+            NavigationManager.NavigateTo("catalog/products");
+        }
+        else
+        {
+            await DialogService.DisplayAlert("Errore", result.ErrorMessage, "Ok")
+                .ConfigureAwait(false);
+        }
+    }
+
+    private void Abort()
+    {
+        NavigationManager.NavigateTo("catalog/products");
+
+    }
+}

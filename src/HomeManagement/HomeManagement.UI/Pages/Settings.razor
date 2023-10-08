@@ -1,0 +1,43 @@
+﻿@page "/settings"
+
+<header class="fixed bg-teal-400/[.95] py-2 px-5 top-0 w-full h-12 z-10 text-slate-900">Settings</header>
+
+<main class="py-14 px-3 flex flex-col space-y-2 z-0 items-center mx-auto">
+
+    <HomeManagement.UI.Components.MyButton Text="Primary button" OnClick="PrimaryClick" />
+    <HomeManagement.UI.Components.MyButton Text="Secondary button" IsPrimary=false OnClick="SecondaryClick" />
+
+    <HomeManagement.UI.Components.MyInputText Placeholder="testo..." @bind-Value=text />
+    <span>@text</span>
+
+    <section class="flex flex-col rounded-2xl p-6 shadow-lg shadow-gray-900/5 bg-white max-w-sm">
+        <h3 class="flex item-center text-sm font-semibold text-gray-900">Titolo</h3>
+        <p class="text-gray-700 mt-3 text-sm">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum
+            ipsum tempore distinctio saepe vero quasi consectetur doloremque velit quam! Ipsam maxime itaque
+            doloremque placeat voluptas at, esse et architecto quasi.
+        </p>
+    </section>
+
+    <select class="p-2 w-full rounded-md border block border-slate-300 bg-white shadow-sm focus:border-violet-700 focus:outline-none focus:ring-1 focus:ring-violet-700 sm:text-sm">
+        <option value="val1">Voce 1</option>
+        <option value="val2">Voce 2</option>
+    </select>
+
+    <MyAutoComplete />
+
+</main>
+
+@code {
+    private string text;
+
+    private void PrimaryClick()
+    {
+        text = "primary click";
+    }
+
+    private void SecondaryClick()
+    {
+        text = "secondary click";
+    }
+}

@@ -1,0 +1,40 @@
+@page "/Products"
+@using HomeManagement.Client.Features.Catalog.Products.EditProduct.Components
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<PageTitle>Prodotti</PageTitle>
+
+@if (OnEdit)
+{
+    <EditProductComponent />
+}
+else
+{
+    <div class="row">
+        <div class="col d-flex flex-row-reverse">
+            <MudIcon Icon="@Icons.Material.Filled.Add" Size="Size.Large" Title="New" @onclick="NewProduct" />
+        </div>
+    </div>
+
+    @if (Loading || !Initialized)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col">
+                <MudTable Items="@Products" T="Models.Product" OnRowClick="RowClickEvent" Hover="true" Breakpoint="Breakpoint.None" FixedHeader="true">
+                    <HeaderContent>
+                        <MudTh>Prodotti</MudTh>
+                        <MudTh></MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd>@context.Description</MudTd>
+                        <MudTd Style="text-align:end"><MudIcon Icon="@Icons.Material.Filled.Edit" Title="Edit" @onclick="()=>EditProduct(context)" /></MudTd>
+                    </RowTemplate>
+                </MudTable>
+            </div>
+        </div>
+    }
+}
