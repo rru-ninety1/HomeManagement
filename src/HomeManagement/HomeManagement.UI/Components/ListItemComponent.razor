@@ -1,0 +1,12 @@
+﻿<section class="flex justify-between w-full rounded-2xl p-4 shadow-lg shadow-gray-900/5 bg-white max-w-sm" @onclick="OnClick">
+    @ItemModel
+</section>
+
+@code
+{
+    [Parameter]
+    public RenderFragment ItemModel { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+}
