@@ -35,7 +35,7 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Features\Localization\AppCulture.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AppCulture.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

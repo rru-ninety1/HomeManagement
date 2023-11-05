@@ -22,7 +22,7 @@ namespace HomeManagement.UI.Features.Localization {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class AppCulture {
+    public class AppCulture {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace HomeManagement.UI.Features.Localization {
         ///   Restituisce l'istanza di ResourceManager nella cache utilizzata da questa classe.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("HomeManagement.UI.Features.Localization.AppCulture", typeof(AppCulture).Assembly);
@@ -51,7 +51,7 @@ namespace HomeManagement.UI.Features.Localization {
         ///   ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,11 +61,38 @@ namespace HomeManagement.UI.Features.Localization {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Errore lettura categorie.
+        ///   Cerca una stringa localizzata simile a Category non found.
         /// </summary>
-        internal static string ErrLetturaCategorie {
+        public static string CategoryNotFound {
             get {
-                return ResourceManager.GetString("ErrLetturaCategorie", resourceCulture);
+                return ResourceManager.GetString("CategoryNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Error reading cateogories.
+        /// </summary>
+        public static string ErrorReadingCategories {
+            get {
+                return ResourceManager.GetString("ErrorReadingCategories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Category is mandatory.
+        /// </summary>
+        public static string MandatoryCategory {
+            get {
+                return ResourceManager.GetString("MandatoryCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Ok.
+        /// </summary>
+        public static string Ok {
+            get {
+                return ResourceManager.GetString("Ok", resourceCulture);
             }
         }
     }

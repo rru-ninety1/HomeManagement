@@ -34,7 +34,7 @@ public class ExceptionBehaviorT<TRequest, TResponse> : IPipelineBehavior<TReques
             {
                 var innerType = responseType.GetGenericArguments()[0];
                 var resultType = typeof(Result<>).MakeGenericType(innerType);
-                return resultType.GetMethod("Fail", new[] { typeof(int), typeof(Exception) }).Invoke(null, new object[] { FailureReasons.GenericError, e }) as TResponse;
+                return resultType.GetMethod("Fail", new[] { typeof(int), typeof(Exception), typeof(ValidationError) }).Invoke(null, new object[] { FailureReasons.GenericError, e, null }) as TResponse;
             }
 
             return Result.Fail(FailureReasons.GenericError, e) as TResponse;

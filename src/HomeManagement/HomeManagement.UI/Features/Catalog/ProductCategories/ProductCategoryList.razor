@@ -3,10 +3,11 @@
 @using HomeManagement.Core.Catalog;
 
 
+
 @inject NavigationManager NavigationManager
 @inject IDispacher Dispacher
 @inject IDialogService DialogService
-@inject IStringLocalizer<AppCulture> Localizer
+@inject ILocalizationService Localizer
 
 <SeachBarComponent @bind-Value="searchCategory" />
 
@@ -14,13 +15,17 @@
 
     <NewListItemComponent OnClick="()=>OnCategoryClick(null)" />
 
-    @foreach (ProductCategory item in FilteredCategoryItems)
+    @if (FilteredCategoryItems != null)
     {
-        <ListItemComponent OnClick="() => OnCategoryClick(item)">
-            <ItemModel>
-                <h3 class="flex item-center text-sm font-semibold text-gray-900">@item.Description</h3>@Localizer["ErrLetturaCategorie"]
-            </ItemModel>
-        </ListItemComponent>
+        @foreach (ProductCategory item in FilteredCategoryItems)
+        {
+            <ListItemComponent OnClick="() => OnCategoryClick(item)">
+                <ItemModel>
+                    <h3 class="flex item-center text-sm font-semibold text-gray-900">@item.Description</h3>
+                </ItemModel>
+            </ListItemComponent>
+        }
+
     }
 </div>
 
@@ -40,7 +45,7 @@
         }
         else
         {
-            await DialogService.DisplayAlert(Localizer["ErrLetturaCategorie"], readProductCategoryResult.ErrorMessage, "Ok")
+            await DialogService.DisplayAlert(Localizer.GetLocalizedString("ErrorReadingCategories"), readProductCategoryResult.ErrorMessage, Localizer.GetLocalizedString("Ok"))
                .ConfigureAwait(false);
             CategoryItems = Enumerable.Empty<ProductCategory>();
         }
