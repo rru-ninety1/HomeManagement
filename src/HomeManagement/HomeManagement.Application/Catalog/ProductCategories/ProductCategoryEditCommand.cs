@@ -46,4 +46,3 @@ public sealed class ProductCategoryEditCommandValidator : AbstractValidator<Prod
         RuleFor(x => x.Description).NotEmpty().WithMessage(localizationService.GetLocalizedString("MandatoryDescription"));
     }
 }
-}

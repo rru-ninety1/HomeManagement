@@ -120,13 +120,31 @@
   <data name="CategoryNotFound" xml:space="preserve">
     <value>Categoria non trovata</value>
   </data>
+  <data name="ErrorExecutingRequest" xml:space="preserve">
+    <value>Errore esecuzione richiesta {request}</value>
+  </data>
   <data name="ErrorReadingCategories" xml:space="preserve">
     <value>Errore lettura categorie</value>
+  </data>
+  <data name="ListItemNotFound" xml:space="preserve">
+    <value>Item lista non trovato</value>
   </data>
   <data name="MandatoryCategory" xml:space="preserve">
     <value>Categoria obbligatoria</value>
   </data>
+  <data name="MandatoryId" xml:space="preserve">
+    <value>Id obbligatorio</value>
+  </data>
+  <data name="MandatoryProduct" xml:space="preserve">
+    <value>Prodotto obbligatorio</value>
+  </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
+  </data>
+  <data name="PositiveQuantity" xml:space="preserve">
+    <value>Quantità deve essere maggiore di 0</value>
+  </data>
+  <data name="ProductNotFound" xml:space="preserve">
+    <value>Prodotto non trovato</value>
   </data>
 </root>

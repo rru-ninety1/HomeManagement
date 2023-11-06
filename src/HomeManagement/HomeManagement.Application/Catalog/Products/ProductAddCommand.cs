@@ -2,6 +2,7 @@
 using HomeManagement.Business.Common.CommandQuery;
 using HomeManagement.Business.Common.Interfaces;
 using HomeManagement.Core.Catalog;
+using HomeManagement.Core.Localization;
 using OperationResults;
 using Riok.Mapperly.Abstractions;
 
@@ -12,17 +13,19 @@ public record ProductAddCommand(string Description, string CategoryId) : IComman
 public class ProductAddCommandHandler : ICommandHandler<ProductAddCommand>
 {
     private readonly IDataContext _dataContext;
+    private readonly ILocalizationService _localizationService;
 
-    public ProductAddCommandHandler(IDataContext dataContext)
+    public ProductAddCommandHandler(IDataContext dataContext, ILocalizationService localizationService)
     {
         _dataContext = dataContext;
+        _localizationService = localizationService;
     }
 
     public async Task<Result> Handle(ProductAddCommand command, CancellationToken cancellationToken)
     {
         if (!_dataContext.GetData<ProductCategory>().Any(x => x.Id.Equals(command.CategoryId)))
         {
-            return Result.Fail(FailureReasons.ItemNotFound, "Categoria non presente");
+            return Result.Fail(FailureReasons.ItemNotFound, _localizationService.GetLocalizedString("CategoryNotFound"));
         }
 
         var product = new ProductAddCommandMapper().ToProduct(command);
@@ -37,10 +40,10 @@ public class ProductAddCommandHandler : ICommandHandler<ProductAddCommand>
 
 public sealed class ProductAddCommandValidator : AbstractValidator<ProductAddCommand>
 {
-    public ProductAddCommandValidator()
+    public ProductAddCommandValidator(ILocalizationService localizationService)
     {
-        RuleFor(x => x.Description).NotEmpty().WithMessage("Descrizione obbligatoria");
-        RuleFor(x => x.CategoryId).NotEmpty().WithMessage("Categoria obbligatoria");
+        RuleFor(x => x.Description).NotEmpty().WithMessage(localizationService.GetLocalizedString("MandatoryDescription"));
+        RuleFor(x => x.CategoryId).NotEmpty().WithMessage(localizationService.GetLocalizedString("MandatoryCategory"));
     }
 }
 

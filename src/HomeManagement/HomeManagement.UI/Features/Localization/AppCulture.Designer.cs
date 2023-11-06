@@ -61,11 +61,20 @@ namespace HomeManagement.UI.Features.Localization {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Category non found.
+        ///   Cerca una stringa localizzata simile a Category not found.
         /// </summary>
         public static string CategoryNotFound {
             get {
                 return ResourceManager.GetString("CategoryNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Error executing request {request}.
+        /// </summary>
+        public static string ErrorExecutingRequest {
+            get {
+                return ResourceManager.GetString("ErrorExecutingRequest", resourceCulture);
             }
         }
         
@@ -79,6 +88,15 @@ namespace HomeManagement.UI.Features.Localization {
         }
         
         /// <summary>
+        ///   Cerca una stringa localizzata simile a List item non found.
+        /// </summary>
+        public static string ListItemNotFound {
+            get {
+                return ResourceManager.GetString("ListItemNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una stringa localizzata simile a Category is mandatory.
         /// </summary>
         public static string MandatoryCategory {
@@ -88,11 +106,47 @@ namespace HomeManagement.UI.Features.Localization {
         }
         
         /// <summary>
+        ///   Cerca una stringa localizzata simile a Id is mandatory.
+        /// </summary>
+        public static string MandatoryId {
+            get {
+                return ResourceManager.GetString("MandatoryId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Product is mandatory.
+        /// </summary>
+        public static string MandatoryProduct {
+            get {
+                return ResourceManager.GetString("MandatoryProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una stringa localizzata simile a Ok.
         /// </summary>
         public static string Ok {
             get {
                 return ResourceManager.GetString("Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Quantity must be greater than 0.
+        /// </summary>
+        public static string PositiveQuantity {
+            get {
+                return ResourceManager.GetString("PositiveQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Product not found.
+        /// </summary>
+        public static string ProductNotFound {
+            get {
+                return ResourceManager.GetString("ProductNotFound", resourceCulture);
             }
         }
     }

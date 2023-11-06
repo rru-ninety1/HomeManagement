@@ -118,15 +118,33 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CategoryNotFound" xml:space="preserve">
-    <value>Category non found</value>
+    <value>Category not found</value>
+  </data>
+  <data name="ErrorExecutingRequest" xml:space="preserve">
+    <value>Error executing request {request}</value>
   </data>
   <data name="ErrorReadingCategories" xml:space="preserve">
     <value>Error reading cateogories</value>
   </data>
+  <data name="ListItemNotFound" xml:space="preserve">
+    <value>List item non found</value>
+  </data>
   <data name="MandatoryCategory" xml:space="preserve">
     <value>Category is mandatory</value>
   </data>
+  <data name="MandatoryId" xml:space="preserve">
+    <value>Id is mandatory</value>
+  </data>
+  <data name="MandatoryProduct" xml:space="preserve">
+    <value>Product is mandatory</value>
+  </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
+  </data>
+  <data name="PositiveQuantity" xml:space="preserve">
+    <value>Quantity must be greater than 0</value>
+  </data>
+  <data name="ProductNotFound" xml:space="preserve">
+    <value>Product not found</value>
   </data>
 </root>
