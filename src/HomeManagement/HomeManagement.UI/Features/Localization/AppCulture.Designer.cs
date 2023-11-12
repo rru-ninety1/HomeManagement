@@ -61,11 +61,56 @@ namespace HomeManagement.UI.Features.Localization {
         }
         
         /// <summary>
+        ///   Cerca una stringa localizzata simile a Abort.
+        /// </summary>
+        public static string Abort {
+            get {
+                return ResourceManager.GetString("Abort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Catalogs.
+        /// </summary>
+        public static string Catalogs {
+            get {
+                return ResourceManager.GetString("Catalogs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Categories.
+        /// </summary>
+        public static string Categories {
+            get {
+                return ResourceManager.GetString("Categories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una stringa localizzata simile a Category not found.
         /// </summary>
         public static string CategoryNotFound {
             get {
                 return ResourceManager.GetString("CategoryNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Description.
+        /// </summary>
+        public static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Error.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
             }
         }
         
@@ -84,6 +129,24 @@ namespace HomeManagement.UI.Features.Localization {
         public static string ErrorReadingCategories {
             get {
                 return ResourceManager.GetString("ErrorReadingCategories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Error reading products.
+        /// </summary>
+        public static string ErrorReadingProducts {
+            get {
+                return ResourceManager.GetString("ErrorReadingProducts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Last price.
+        /// </summary>
+        public static string LastPrice {
+            get {
+                return ResourceManager.GetString("LastPrice", resourceCulture);
             }
         }
         
@@ -142,11 +205,47 @@ namespace HomeManagement.UI.Features.Localization {
         }
         
         /// <summary>
+        ///   Cerca una stringa localizzata simile a Product.
+        /// </summary>
+        public static string Product {
+            get {
+                return ResourceManager.GetString("Product", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Product category.
+        /// </summary>
+        public static string ProductCategory {
+            get {
+                return ResourceManager.GetString("ProductCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una stringa localizzata simile a Product not found.
         /// </summary>
         public static string ProductNotFound {
             get {
                 return ResourceManager.GetString("ProductNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Products.
+        /// </summary>
+        public static string Products {
+            get {
+                return ResourceManager.GetString("Products", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Save.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
             }
         }
     }

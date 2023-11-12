@@ -9,13 +9,14 @@
 @inject NavigationManager NavigationManager
 @inject IDispacher Dispacher
 @inject IDialogService DialogService
+@inject ILocalizationService Localizer
 
 <header class="bg-teal-400/[.95] pt-2 px-5 w-full h-12 text-slate-900">
-    <div>Prodotti</div>
+    <div>@Localizer.GetLocalizedString("Product")</div>
 </header>
 
 <main class="flex flex-col pt-2 px-3 justify-center h-4/5">
-    <HomeManagement.UI.Components.MyInputText Placeholder="Descrizione..." @bind-Value=Description />
+    <HomeManagement.UI.Components.MyInputText Placeholder="c" @bind-Value=Description />
     
     <select 
         @bind="CategoryId" 
@@ -31,11 +32,11 @@
         @bind-Value=LastPrice
         Css="mt-2"
         ReadOnly=true 
-        Placeholder="Ultimo prezzo" />
+        Placeholder="@Localizer.GetLocalizedString("LastPrice")" />
 
     <div class="w-full pt-16 px-3 grid grid-cols-2 justify-items-stretch gap-4">
-        <HomeManagement.UI.Components.MyButton Text="Annulla" IsPrimary=false OnClick="Abort" />
-        <HomeManagement.UI.Components.MyButton Text="Salva" OnClick="Save" />
+        <HomeManagement.UI.Components.MyButton Text="@Localizer.GetLocalizedString("Abort")" IsPrimary=false OnClick="Abort" />
+        <HomeManagement.UI.Components.MyButton Text="@Localizer.GetLocalizedString("Save")" OnClick="Save" />
     </div>
 </main>
 
@@ -104,7 +105,7 @@
         }
         else
         {
-            await DialogService.DisplayAlert("Errore", result.ErrorMessage, "Ok")
+            await DialogService.DisplayAlert(Localizer.GetLocalizedString("Error"), result.ErrorMessage, Localizer.GetLocalizedString("Ok"))
                 .ConfigureAwait(false);
         }
     }

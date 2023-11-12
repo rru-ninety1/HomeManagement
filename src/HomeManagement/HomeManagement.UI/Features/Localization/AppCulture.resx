@@ -117,14 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Abort" xml:space="preserve">
+    <value>Abort</value>
+  </data>
+  <data name="Catalogs" xml:space="preserve">
+    <value>Catalogs</value>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>Categories</value>
+  </data>
   <data name="CategoryNotFound" xml:space="preserve">
     <value>Category not found</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
   </data>
   <data name="ErrorExecutingRequest" xml:space="preserve">
     <value>Error executing request {request}</value>
   </data>
   <data name="ErrorReadingCategories" xml:space="preserve">
     <value>Error reading cateogories</value>
+  </data>
+  <data name="ErrorReadingProducts" xml:space="preserve">
+    <value>Error reading products</value>
+  </data>
+  <data name="LastPrice" xml:space="preserve">
+    <value>Last price</value>
   </data>
   <data name="ListItemNotFound" xml:space="preserve">
     <value>List item non found</value>
@@ -144,7 +165,19 @@
   <data name="PositiveQuantity" xml:space="preserve">
     <value>Quantity must be greater than 0</value>
   </data>
+  <data name="Product" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="ProductCategory" xml:space="preserve">
+    <value>Product category</value>
+  </data>
   <data name="ProductNotFound" xml:space="preserve">
     <value>Product not found</value>
+  </data>
+  <data name="Products" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
   </data>
 </root>
