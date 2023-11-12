@@ -2,6 +2,7 @@
 using HomeManagement.Business.Common.CommandQuery;
 using HomeManagement.Business.Common.Interfaces;
 using HomeManagement.Core.Catalog;
+using HomeManagement.Core.Localization;
 using OperationResults;
 
 namespace HomeManagement.Business.Catalog.ProductCategories;
@@ -11,10 +12,12 @@ public record ProductCategoryEditCommand(string Id, string Description) : IComma
 public class ProductCategoryEditCommandHandler : ICommandHandler<ProductCategoryEditCommand>
 {
     private readonly IDataContext _dataContext;
+    private readonly ILocalizationService _localizationService;
 
-    public ProductCategoryEditCommandHandler(IDataContext dataContext)
+    public ProductCategoryEditCommandHandler(IDataContext dataContext, ILocalizationService localizationService)
     {
         _dataContext = dataContext;
+        _localizationService = localizationService;
     }
 
     public async Task<Result> Handle(ProductCategoryEditCommand command, CancellationToken cancellationToken)
@@ -24,7 +27,7 @@ public class ProductCategoryEditCommandHandler : ICommandHandler<ProductCategory
 
         if (dbProductCategory == null)
         {
-            return Result.Fail(FailureReasons.ItemNotFound, "Categoria non presente");
+            return Result.Fail(FailureReasons.ItemNotFound, _localizationService.GetLocalizedString("CategoryNotFound"));
         }
 
         dbProductCategory.Description = command.Description;
@@ -38,8 +41,8 @@ public class ProductCategoryEditCommandHandler : ICommandHandler<ProductCategory
 
 public sealed class ProductCategoryEditCommandValidator : AbstractValidator<ProductCategoryEditCommand>
 {
-    public ProductCategoryEditCommandValidator()
+    public ProductCategoryEditCommandValidator(ILocalizationService localizationService)
     {
-        RuleFor(x => x.Description).NotEmpty().WithMessage("Descrizione obbligatoria");
+        RuleFor(x => x.Description).NotEmpty().WithMessage(localizationService.GetLocalizedString("MandatoryDescription"));
     }
 }

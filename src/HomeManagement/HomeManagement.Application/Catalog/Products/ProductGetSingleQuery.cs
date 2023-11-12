@@ -2,6 +2,7 @@
 using HomeManagement.Business.Common.CommandQuery;
 using HomeManagement.Business.Common.Interfaces;
 using HomeManagement.Core.Catalog;
+using HomeManagement.Core.Localization;
 using Microsoft.EntityFrameworkCore;
 using OperationResults;
 
@@ -12,10 +13,12 @@ public record ProductGetSingleQuery(string Id) : IQuery<Product>;
 public class ProductGetSingleQueryHandler : IQueryHandler<ProductGetSingleQuery, Product>
 {
     private readonly IReadOnlyDataContext _dataContext;
+    private readonly ILocalizationService _localizationService;
 
-    public ProductGetSingleQueryHandler(IReadOnlyDataContext dataContext)
+    public ProductGetSingleQueryHandler(IReadOnlyDataContext dataContext, ILocalizationService localizationService)
     {
         _dataContext = dataContext;
+        _localizationService = localizationService;
     }
 
     public async Task<Result<Product>> Handle(ProductGetSingleQuery query, CancellationToken cancellationToken)
@@ -26,7 +29,7 @@ public class ProductGetSingleQueryHandler : IQueryHandler<ProductGetSingleQuery,
 
         if (product == null)
         {
-            return Result.Fail(FailureReasons.ItemNotFound, "Prodotto non presente");
+            return Result.Fail(FailureReasons.ItemNotFound, _localizationService.GetLocalizedString("ProductNotFound"));
         }
 
         return product;
@@ -35,8 +38,8 @@ public class ProductGetSingleQueryHandler : IQueryHandler<ProductGetSingleQuery,
 
 public sealed class ProductGetSingleQueryValidator : AbstractValidator<ProductGetSingleQuery>
 {
-    public ProductGetSingleQueryValidator()
+    public ProductGetSingleQueryValidator(ILocalizationService localizationService)
     {
-        RuleFor(x => x.Id).NotEmpty().WithMessage("Prodotto obbligatorio");
+        RuleFor(x => x.Id).NotEmpty().WithMessage(localizationService.GetLocalizedString("MandatoryProduct"));
     }
 }

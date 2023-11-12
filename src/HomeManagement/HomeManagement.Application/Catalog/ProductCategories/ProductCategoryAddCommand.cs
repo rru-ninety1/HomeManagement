@@ -2,6 +2,7 @@
 using HomeManagement.Business.Common.CommandQuery;
 using HomeManagement.Business.Common.Interfaces;
 using HomeManagement.Core.Catalog;
+using HomeManagement.Core.Localization;
 using OperationResults;
 
 namespace HomeManagement.Business.Catalog.ProductCategories;
@@ -30,8 +31,8 @@ public sealed class ProductCategoryAddCommandHandler : ICommandHandler<ProductCa
 
 public sealed class ProductCategoryAddCommandValidator : AbstractValidator<ProductCategoryAddCommand>
 {
-    public ProductCategoryAddCommandValidator()
+    public ProductCategoryAddCommandValidator(ILocalizationService localizationService)
     {
-        RuleFor(x => x.Description).NotEmpty().WithMessage("Descrizione obbligatoria");
+        RuleFor(x => x.Description).NotEmpty().WithMessage(localizationService.GetLocalizedString("MandatoryDescription"));
     }
 }

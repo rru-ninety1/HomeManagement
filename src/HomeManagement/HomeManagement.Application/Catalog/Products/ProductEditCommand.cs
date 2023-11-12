@@ -2,6 +2,7 @@
 using HomeManagement.Business.Common.CommandQuery;
 using HomeManagement.Business.Common.Interfaces;
 using HomeManagement.Core.Catalog;
+using HomeManagement.Core.Localization;
 using OperationResults;
 using Riok.Mapperly.Abstractions;
 
@@ -12,17 +13,19 @@ public record ProductEditCommand(string Id, string Description, string CategoryI
 public class ProductEditCommandHandler : ICommandHandler<ProductEditCommand>
 {
     private readonly IDataContext _dataContext;
+    private readonly ILocalizationService _localizationService;
 
-    public ProductEditCommandHandler(IDataContext dataContext)
+    public ProductEditCommandHandler(IDataContext dataContext, ILocalizationService localizationService)
     {
         _dataContext = dataContext;
+        _localizationService = localizationService;
     }
 
     public async Task<Result> Handle(ProductEditCommand command, CancellationToken cancellationToken)
     {
         if (!_dataContext.GetData<ProductCategory>().Any(x => x.Id.Equals(command.CategoryId)))
         {
-            return Result.Fail(FailureReasons.ItemNotFound, "Categoria non presente");
+            return Result.Fail(FailureReasons.ItemNotFound, _localizationService.GetLocalizedString("CategoryNotFound"));
         }
 
         var product = await _dataContext.GetAsync<Product>(command.Id)
@@ -30,7 +33,7 @@ public class ProductEditCommandHandler : ICommandHandler<ProductEditCommand>
 
         if (product == null)
         {
-            return Result.Fail(FailureReasons.ItemNotFound, "Prodotto non presente");
+            return Result.Fail(FailureReasons.ItemNotFound, _localizationService.GetLocalizedString("ProductNotFound"));
         }
 
         new ProductEditCommandMapper().ToProduct(command, product);
@@ -44,10 +47,10 @@ public class ProductEditCommandHandler : ICommandHandler<ProductEditCommand>
 
 public sealed class ProductEditCommandValidator : AbstractValidator<ProductEditCommand>
 {
-    public ProductEditCommandValidator()
+    public ProductEditCommandValidator(ILocalizationService localizationService)
     {
-        RuleFor(x => x.Description).NotEmpty().WithMessage("Descrizione obbligatoria");
-        RuleFor(x => x.CategoryId).NotEmpty().WithMessage("Categoria obbligatoria");
+        RuleFor(x => x.Description).NotEmpty().WithMessage(localizationService.GetLocalizedString("MandatoryDescription"));
+        RuleFor(x => x.CategoryId).NotEmpty().WithMessage(localizationService.GetLocalizedString("MandatoryCategory"));
     }
 }
 

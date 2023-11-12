@@ -5,6 +5,7 @@
 @inject NavigationManager NavigationManager
 @inject IDispacher Dispacher
 @inject IDialogService DialogService
+@inject ILocalizationService Localizer
 
 <SeachBarComponent @bind-Value="searchProduct" />
 
@@ -33,7 +34,7 @@
         }
         else
         {
-            await DialogService.DisplayAlert("Errore lettura prodotti", readProductResult.ErrorMessage, "Ok")
+            await DialogService.DisplayAlert(Localizer.GetLocalizedString("ErrorReadingProducts"), readProductResult.ErrorMessage, Localizer.GetLocalizedString("Ok"))
                .ConfigureAwait(false);
             ProductItems = Enumerable.Empty<Product>();
         }

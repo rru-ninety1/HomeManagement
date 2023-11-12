@@ -44,8 +44,6 @@
         IsFirtstTabVisible = false;
 
         StateHasChanged();
-
-        //TODO controllare se, al ritorno dalla paggina di modifica, viene fatto il render 2 volte del componente con caricamento due volte della griglia
     }
 
     [Parameter]
@@ -58,8 +56,8 @@
     public string SecondTabLabel { get; set; }
 
     [Parameter]
-    public RenderFragment? FirstTab { get; set; }
+    public RenderFragment FirstTab { get; set; }
 
     [Parameter]
-    public RenderFragment? SecondTab { get; set; }
+    public RenderFragment SecondTab { get; set; }
 }

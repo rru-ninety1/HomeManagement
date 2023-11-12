@@ -2,6 +2,7 @@
 using HomeManagement.Business.Common.CommandQuery;
 using HomeManagement.Business.Common.Interfaces;
 using HomeManagement.Core.Catalog;
+using HomeManagement.Core.Localization;
 using HomeManagement.Core.ShoppingList;
 using OperationResults;
 using Riok.Mapperly.Abstractions;
@@ -12,17 +13,19 @@ public sealed record ShoppingListItemAddCommand(string ProductId, double Quantit
 public sealed class ShoppingListItemAddCommandHandler : ICommandHandler<ShoppingListItemAddCommand>
 {
     private readonly IDataContext _dataContext;
+    private readonly ILocalizationService _localizationService;
 
-    public ShoppingListItemAddCommandHandler(IDataContext dataContext)
+    public ShoppingListItemAddCommandHandler(IDataContext dataContext, ILocalizationService localizationService)
     {
         _dataContext = dataContext;
+        _localizationService = localizationService;
     }
 
     public async Task<Result> Handle(ShoppingListItemAddCommand command, CancellationToken cancellationToken)
     {
         if (!_dataContext.GetData<Product>().Any(x => x.Id.Equals(command.ProductId)))
         {
-            return Result.Fail(FailureReasons.ItemNotFound, "Prodotto non presente");
+            return Result.Fail(FailureReasons.ItemNotFound, _localizationService.GetLocalizedString("ProductNotFound"));
         }
 
         var item = new ShoppingListItemAddCommandMapper().ToShoppingListItem(command);
@@ -38,10 +41,10 @@ public sealed class ShoppingListItemAddCommandHandler : ICommandHandler<Shopping
 
 public sealed class ShoppingListItemAddCommandValidator : AbstractValidator<ShoppingListItemAddCommand>
 {
-    public ShoppingListItemAddCommandValidator()
+    public ShoppingListItemAddCommandValidator(ILocalizationService localizationService)
     {
-        RuleFor(x => x.ProductId).NotEmpty().WithMessage("Prodotto obbligatorio");
-        RuleFor(x => x.Quantity).GreaterThan(0).WithMessage("La quantità deve essere positiva");
+        RuleFor(x => x.ProductId).NotEmpty().WithMessage(localizationService.GetLocalizedString("MandatoryProduct"));
+        RuleFor(x => x.Quantity).GreaterThan(0).WithMessage(localizationService.GetLocalizedString("PositiveQuantity"));
     }
 }
 

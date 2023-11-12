@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using HomeManagement.Business.Common.CommandQuery;
 using HomeManagement.Business.Common.Interfaces;
+using HomeManagement.Core.Localization;
 using HomeManagement.Core.ShoppingList;
 using Microsoft.EntityFrameworkCore;
 using OperationResults;
@@ -11,10 +12,12 @@ public sealed record ShoppingListItemGetSingleQuery(string Id) : IQuery<Shopping
 public sealed class ShoppingListItemGetSingleQueryHandler : IQueryHandler<ShoppingListItemGetSingleQuery, ShoppingListItem>
 {
     private readonly IReadOnlyDataContext _dataContext;
+    private readonly ILocalizationService _localizationService;
 
-    public ShoppingListItemGetSingleQueryHandler(IReadOnlyDataContext dataContext)
+    public ShoppingListItemGetSingleQueryHandler(IReadOnlyDataContext dataContext, ILocalizationService localizationService)
     {
         _dataContext = dataContext;
+        _localizationService = localizationService;
     }
 
     public async Task<Result<ShoppingListItem>> Handle(ShoppingListItemGetSingleQuery query, CancellationToken cancellationToken)
@@ -25,7 +28,7 @@ public sealed class ShoppingListItemGetSingleQueryHandler : IQueryHandler<Shoppi
 
         if (shoppingListItem == null)
         {
-            return Result.Fail(FailureReasons.ItemNotFound, "Item non presente");
+            return Result.Fail(FailureReasons.ItemNotFound, _localizationService.GetLocalizedString("ListItemNotFound"));
         }
 
         return shoppingListItem;
@@ -34,8 +37,8 @@ public sealed class ShoppingListItemGetSingleQueryHandler : IQueryHandler<Shoppi
 
 public sealed class ShoppingListItemGetSingleQueryValidator : AbstractValidator<ShoppingListItemGetSingleQuery>
 {
-    public ShoppingListItemGetSingleQueryValidator()
+    public ShoppingListItemGetSingleQueryValidator(ILocalizationService localizationService)
     {
-        RuleFor(x => x.Id).NotEmpty().WithMessage("Id obbligatorio");
+        RuleFor(x => x.Id).NotEmpty().WithMessage(localizationService.GetLocalizedString("MandatoryId"));
     }
 }

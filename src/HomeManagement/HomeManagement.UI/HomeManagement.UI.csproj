@@ -6,6 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+	<PropertyGroup>
+		<BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
+	</PropertyGroup>
 
   <ItemGroup>
     <SupportedPlatform Include="browser" />
@@ -13,6 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.11" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="7.0.13" />
     <PackageReference Include="OperationResultTools" Version="1.0.12" />
   </ItemGroup>
 
@@ -20,5 +24,21 @@
     <ProjectReference Include="..\HomeManagement.Application\HomeManagement.Business.csproj" />
     <ProjectReference Include="..\HomeManagement.Core\HomeManagement.Core.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Features\Localization\AppCulture.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AppCulture.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Features\Localization\AppCulture.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppCulture.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 
 </Project>

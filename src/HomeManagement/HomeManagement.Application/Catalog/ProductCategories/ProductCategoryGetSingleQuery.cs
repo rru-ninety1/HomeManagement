@@ -2,6 +2,7 @@
 using HomeManagement.Business.Common.CommandQuery;
 using HomeManagement.Business.Common.Interfaces;
 using HomeManagement.Core.Catalog;
+using HomeManagement.Core.Localization;
 using Microsoft.EntityFrameworkCore;
 using OperationResults;
 
@@ -12,10 +13,12 @@ public record ProductCategoryGetSingleQuery(string Id) : IQuery<ProductCategory>
 public class ProductCategoryGetSingleQueryHandler : IQueryHandler<ProductCategoryGetSingleQuery, ProductCategory>
 {
     private readonly IReadOnlyDataContext _dataContext;
+    private readonly ILocalizationService _localizationService;
 
-    public ProductCategoryGetSingleQueryHandler(IReadOnlyDataContext dataContext)
+    public ProductCategoryGetSingleQueryHandler(IReadOnlyDataContext dataContext, ILocalizationService localizationService)
     {
         _dataContext = dataContext;
+        _localizationService = localizationService;
     }
 
     public async Task<Result<ProductCategory>> Handle(ProductCategoryGetSingleQuery query, CancellationToken cancellationToken)
@@ -26,7 +29,7 @@ public class ProductCategoryGetSingleQueryHandler : IQueryHandler<ProductCategor
 
         if (productCategory == null)
         {
-            return Result.Fail(FailureReasons.ItemNotFound, "Categoria non presente");
+            return Result.Fail(FailureReasons.ItemNotFound, _localizationService.GetLocalizedString("CategoryNotFound"));
         }
 
         return productCategory;
@@ -35,8 +38,8 @@ public class ProductCategoryGetSingleQueryHandler : IQueryHandler<ProductCategor
 
 public sealed class ProductCategoryGetSingleQueryValidator : AbstractValidator<ProductCategoryGetSingleQuery>
 {
-    public ProductCategoryGetSingleQueryValidator()
+    public ProductCategoryGetSingleQueryValidator(ILocalizationService localizationService)
     {
-        RuleFor(x => x.Id).NotEmpty().WithMessage("Cateogira obbligatoria");
+        RuleFor(x => x.Id).NotEmpty().WithMessage(localizationService.GetLocalizedString("MandatoryCategory"));
     }
 }

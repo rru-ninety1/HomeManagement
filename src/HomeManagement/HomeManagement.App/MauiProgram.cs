@@ -2,6 +2,7 @@
 using HomeManagement.Business;
 using HomeManagement.Business.Common.Interfaces;
 using HomeManagement.Infrastructure;
+using HomeManagement.UI;
 using Microsoft.Extensions.Logging;
 
 namespace HomeManagement.App
@@ -10,6 +11,10 @@ namespace HomeManagement.App
     {
         public static MauiApp CreateMauiApp()
         {
+            // To set different culture
+            //CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
+            //CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US");
+
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
@@ -29,6 +34,7 @@ namespace HomeManagement.App
 
             builder.Services.AddBusinessServices();
             builder.Services.AddInfrastructureServices(inMemoryDb, FileSystem.AppDataDirectory);
+            builder.Services.AddAppUIServices();
             builder.Services.AddSingleton<IDialogService, MauiDialogService>();
 
             var mauiApp = builder.Build();
